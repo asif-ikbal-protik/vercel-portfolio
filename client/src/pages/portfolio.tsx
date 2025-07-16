@@ -82,10 +82,14 @@ const Portfolio = () => {
     mutationFn: async () => {
       return await apiRequest('/api/portfolio-view', {
         method: 'POST',
+        body: JSON.stringify({}),
         headers: {
           'Content-Type': 'application/json',
         },
       });
+    },
+    onError: (error) => {
+      console.warn('Portfolio view tracking failed:', error);
     },
   });
 
@@ -335,10 +339,10 @@ const Portfolio = () => {
   }, []);
 
   const FloatingParticles = () => {
-    const particles = Array.from({ length: 8 }, (_, i) => (
+    const particles = Array.from({ length: 15 }, (_, i) => (
       <div
         key={i}
-        className="absolute w-1 h-1 bg-gradient-to-r from-sky-accent to-cyan-accent rounded-full animate-float"
+        className="absolute w-1 h-1 bg-neon-glow rounded-full animate-float glow-effect"
         style={{
           top: `${Math.random() * 100}%`,
           left: `${Math.random() * 100}%`,
@@ -350,13 +354,38 @@ const Portfolio = () => {
     return <>{particles}</>;
   };
 
+  const MatrixRain = () => {
+    const drops = Array.from({ length: 20 }, (_, i) => (
+      <div
+        key={i}
+        className="absolute w-0.5 h-20 bg-gradient-to-b from-matrix-green to-transparent animate-matrix-rain"
+        style={{
+          left: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 3}s`,
+          animationDuration: `${3 + Math.random() * 2}s`
+        }}
+      />
+    ));
+    return <>{drops}</>;
+  };
+
+  const ScanLines = () => (
+    <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-neon-glow to-transparent animate-scan-line opacity-30" />
+      <div className="absolute top-1/3 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-electric-blue to-transparent animate-scan-line opacity-20" 
+           style={{ animationDelay: '1s' }} />
+      <div className="absolute bottom-1/3 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-accent to-transparent animate-scan-line opacity-25" 
+           style={{ animationDelay: '2s' }} />
+    </div>
+  );
+
   return (
     <div className="bg-midnight text-light-text font-sora overflow-x-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-midnight/90 backdrop-blur-sm border-b border-sky-accent/20">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-midnight/95 backdrop-blur-sm border-b border-neon-glow/30">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-bold text-sky-accent">Asif Ikbal</div>
+            <div className="text-xl font-bold text-neon-glow animate-neon-glow font-jetbrains">Asif Ikbal</div>
             
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
@@ -365,7 +394,7 @@ const Portfolio = () => {
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   className={`nav-link transition-colors ${
-                    activeSection === item.id ? 'text-cyan-accent' : 'text-light-text hover:text-sky-accent'
+                    activeSection === item.id ? 'text-neon-glow glow-effect' : 'text-light-text hover:text-neon-glow'
                   }`}
                 >
                   {item.label}
@@ -400,24 +429,26 @@ const Portfolio = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative hero-bg">
+      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <FloatingParticles />
+        <MatrixRain />
+        <ScanLines />
         
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-6 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
-              <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-sky-accent to-cyan-accent p-1">
+              <div className="w-32 h-32 mx-auto mb-6 rounded-full neon-border animate-cyber-pulse">
                 <div className="w-full h-full rounded-full bg-midnight flex items-center justify-center">
-                  <Brain className="w-12 h-12 text-sky-accent" />
+                  <Brain className="w-12 h-12 text-neon-glow animate-hologram" />
                 </div>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-sky-accent to-cyan-accent bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-neon-glow to-electric-blue bg-clip-text text-transparent animate-neon-glow">
                 Asif Ikbal
               </h1>
               
-              <div className="text-xl md:text-2xl text-subtext mb-8">
-                <span className="typing-cursor">{typedText}</span>
+              <div className="text-xl md:text-2xl text-light-text mb-8">
+                <span className="typing-cursor font-jetbrains animate-glitch">{typedText}</span>
               </div>
               
               <p className="text-lg md:text-xl text-subtext max-w-3xl mx-auto mb-10 leading-relaxed">
@@ -429,7 +460,7 @@ const Portfolio = () => {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button
                 onClick={() => scrollToSection('contact')}
-                className="px-8 py-4 bg-gradient-to-r from-sky-accent to-cyan-accent text-midnight font-semibold hover:scale-105 transition-transform"
+                className="px-8 py-4 bg-gradient-to-r from-neon-glow to-electric-blue text-black font-semibold hover:scale-105 transition-transform neon-border animate-cyber-pulse"
               >
                 <Mail className="w-4 h-4 mr-2" />
                 Hire Me
@@ -438,7 +469,7 @@ const Portfolio = () => {
               <Button
                 variant="outline"
                 asChild
-                className="px-8 py-4 border-2 border-sky-accent text-sky-accent font-semibold hover:bg-sky-accent hover:text-midnight transition-colors"
+                className="px-8 py-4 border-2 border-neon-glow text-neon-glow font-semibold hover:bg-neon-glow hover:text-black transition-colors glow-effect"
               >
                 <a href="/resume.pdf" download>
                   <Download className="w-4 h-4 mr-2" />
@@ -454,14 +485,14 @@ const Portfolio = () => {
       <section id="about" className="py-20 section-fade">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-sky-accent to-cyan-accent bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-neon-glow to-electric-blue bg-clip-text text-transparent animate-neon-glow">
               About Me
             </h2>
             
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <Card className="gradient-border bg-transparent">
                 <CardContent className="p-6">
-                  <h3 className="text-2xl font-semibold mb-4 text-sky-accent">AI Data Annotation Expert</h3>
+                  <h3 className="text-2xl font-semibold mb-4 text-neon-glow animate-neon-glow">AI Data Annotation Expert</h3>
                   <p className="text-subtext mb-6 leading-relaxed">
                     With a strong Computer Science and Engineering background, I specialize in managing large-scale 
                     annotation pipelines for cutting-edge AI systems. My expertise spans computer vision, NLP, and 
@@ -525,17 +556,17 @@ const Portfolio = () => {
       <section id="skills" className="py-20 bg-dark-surface/50 section-fade">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-sky-accent to-cyan-accent bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-neon-glow to-electric-blue bg-clip-text text-transparent animate-neon-glow">
               Technical Skills
             </h2>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* AI/ML Skills */}
-              <Card className="skill-card bg-gradient-to-br from-sky-accent/10 to-cyan-accent/10 border-sky-accent/30">
+              <Card className="skill-card bg-gradient-to-br from-neon-glow/10 to-electric-blue/10 border-neon-glow/30 animate-hologram">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
-                    <Brain className="w-6 h-6 text-sky-accent mr-3" />
-                    <h3 className="text-xl font-semibold">AI/ML Expertise</h3>
+                    <Brain className="w-6 h-6 text-neon-glow mr-3 animate-neon-glow" />
+                    <h3 className="text-xl font-semibold text-neon-glow">AI/ML Expertise</h3>
                   </div>
                   <div className="space-y-2">
                     {[
