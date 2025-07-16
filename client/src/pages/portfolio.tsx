@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 import { 
   Mail, 
   Phone, 
@@ -42,7 +44,50 @@ const Portfolio = () => {
   const [currentChar, setCurrentChar] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typedText, setTypedText] = useState('');
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
   const { toast } = useToast();
+
+  const contactMutation = useMutation({
+    mutationFn: async (formData: typeof contactForm) => {
+      return await apiRequest('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for your message! I will get back to you soon.",
+      });
+      setContactForm({ name: '', email: '', subject: '', message: '' });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const trackViewMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest('/api/portfolio-view', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    },
+  });
 
   const phrases = [
     "Data Annotation Manager",
@@ -276,12 +321,18 @@ const Portfolio = () => {
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message! I will get back to you soon.",
-    });
-    // Reset form here
+    contactMutation.mutate(contactForm);
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setContactForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Track portfolio view on mount
+  useEffect(() => {
+    trackViewMutation.mutate();
+  }, []);
 
   const FloatingParticles = () => {
     const particles = Array.from({ length: 8 }, (_, i) => (
@@ -845,8 +896,11 @@ const Portfolio = () => {
                       <Label htmlFor="name" className="text-subtext">Name</Label>
                       <Input
                         id="name"
+                        name="name"
                         type="text"
                         placeholder="Your Name"
+                        value={contactForm.name}
+                        onChange={handleInputChange}
                         required
                         className="mt-2 bg-dark-surface border-sky-accent/30 focus:border-sky-accent text-light-text"
                       />
@@ -856,8 +910,11 @@ const Portfolio = () => {
                       <Label htmlFor="email" className="text-subtext">Email</Label>
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="your.email@example.com"
+                        value={contactForm.email}
+                        onChange={handleInputChange}
                         required
                         className="mt-2 bg-dark-surface border-sky-accent/30 focus:border-sky-accent text-light-text"
                       />
@@ -867,8 +924,11 @@ const Portfolio = () => {
                       <Label htmlFor="subject" className="text-subtext">Subject</Label>
                       <Input
                         id="subject"
+                        name="subject"
                         type="text"
                         placeholder="Project Discussion"
+                        value={contactForm.subject}
+                        onChange={handleInputChange}
                         required
                         className="mt-2 bg-dark-surface border-sky-accent/30 focus:border-sky-accent text-light-text"
                       />
@@ -878,8 +938,11 @@ const Portfolio = () => {
                       <Label htmlFor="message" className="text-subtext">Message</Label>
                       <Textarea
                         id="message"
+                        name="message"
                         rows={5}
                         placeholder="Tell me about your project..."
+                        value={contactForm.message}
+                        onChange={handleInputChange}
                         required
                         className="mt-2 bg-dark-surface border-sky-accent/30 focus:border-sky-accent text-light-text resize-none"
                       />
@@ -887,10 +950,11 @@ const Portfolio = () => {
                     
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-sky-accent to-cyan-accent text-midnight font-semibold hover:scale-105 transition-transform"
+                      disabled={contactMutation.isPending}
+                      className="w-full bg-gradient-to-r from-sky-accent to-cyan-accent text-midnight font-semibold hover:scale-105 transition-transform disabled:opacity-50"
                     >
                       <Send className="w-4 h-4 mr-2" />
-                      Send Message
+                      {contactMutation.isPending ? 'Sending...' : 'Send Message'}
                     </Button>
                   </form>
                 </CardContent>

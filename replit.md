@@ -30,14 +30,16 @@ Preferred communication style: Simple, everyday language.
 
 ### Database Layer
 - **ORM**: Drizzle ORM with PostgreSQL dialect
-- **Schema**: Defined in `shared/schema.ts` with users table
-- **Migrations**: Managed through `drizzle-kit` with migrations in `./migrations`
+- **Schema**: Defined in `shared/schema.ts` with users, contacts, and portfolio_views tables
+- **Migrations**: Managed through `drizzle-kit` with schema push deployment
 - **Connection**: Neon Database serverless connection via `@neondatabase/serverless`
+- **API Endpoints**: Contact form submissions, portfolio view tracking, admin dashboard
 
 ### Storage Interface
 - **Abstraction**: IStorage interface for CRUD operations
-- **Implementation**: MemStorage class for in-memory storage (development)
-- **Methods**: User management (getUser, getUserByUsername, createUser)
+- **Implementation**: DatabaseStorage class using PostgreSQL (production)
+- **Methods**: User management, contact form submissions, portfolio view tracking
+- **Features**: Contact message storage, portfolio analytics, view tracking
 
 ### UI Components
 - **Component Library**: Comprehensive set of 40+ UI components based on Radix UI
