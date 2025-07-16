@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-stack TypeScript web application built with React frontend and Express backend. It's designed as a personal portfolio showcasing AI and data annotation expertise, featuring modern UI components and a clean architecture.
+This is a complete AI portfolio website for Asif Ikbal, showcasing expertise in GenAI, RLHF, SFT, and MLOps. Built with React and TypeScript, featuring a futuristic yet professional design with dark theme, animated elements, and comprehensive sections covering experience, skills, projects, and contact information.
 
 ## User Preferences
 
@@ -46,10 +46,12 @@ Preferred communication style: Simple, everyday language.
 - **Animations**: Tailwind CSS animations and transitions
 
 ### Portfolio Features
-- **Responsive Design**: Mobile-first approach with adaptive layouts
-- **Interactive Elements**: Typing animation, smooth scrolling, dynamic content
+- **Futuristic Design**: Dark theme with sky blue (#38BDF8) and cyan (#22D3EE) accents
+- **Interactive Elements**: Typing animation, smooth scrolling, floating particles, fade animations
+- **Professional Sections**: Hero, About, Skills, Experience, Projects, Education, Contact
 - **Contact Forms**: Integrated contact functionality with toast notifications
-- **Professional Sections**: About, experience, projects, skills, and contact sections
+- **Resume Download**: PDF download functionality with proper resume file
+- **Social Links**: LinkedIn and GitHub integration
 
 ## Data Flow
 

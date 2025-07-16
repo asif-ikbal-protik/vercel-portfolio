@@ -219,17 +219,29 @@ const Portfolio = () => {
     return () => clearTimeout(timer);
   }, [currentPhrase, currentChar, isDeleting]);
 
-  // Intersection Observer for active section
+  // Intersection Observer for active section and fade animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
+            entry.target.classList.add('visible');
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
+    );
+
+    const fadeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
     );
 
     navItems.forEach(item => {
@@ -237,7 +249,15 @@ const Portfolio = () => {
       if (element) observer.observe(element);
     });
 
-    return () => observer.disconnect();
+    // Observe all sections with fade animation
+    document.querySelectorAll('.section-fade').forEach(section => {
+      fadeObserver.observe(section);
+    });
+
+    return () => {
+      observer.disconnect();
+      fadeObserver.disconnect();
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -688,7 +708,7 @@ const Portfolio = () => {
                     <div className="timeline-item">
                       <div className="flex items-center mb-2">
                         <GraduationCap className="w-5 h-5 text-cyan-accent mr-2" />
-                        <h4 className="text-xl font-semibold text-cyan-accent">Higher Secondary Tag</h4>
+                        <h4 className="text-xl font-semibold text-cyan-accent">Higher Secondary Certificate</h4>
                       </div>
                       <p className="text-subtext">Alamdanga Govt. College</p>
                       <p className="text-subtext">2015 – 2017</p>
@@ -794,16 +814,22 @@ const Portfolio = () => {
                       <Button
                         variant="outline"
                         size="icon"
+                        asChild
                         className="w-12 h-12 bg-sky-accent/20 hover:bg-sky-accent/40 border-sky-accent/30"
                       >
-                        <Linkedin className="w-5 h-5 text-sky-accent" />
+                        <a href="https://linkedin.com/in/asif-ikbal" target="_blank" rel="noopener noreferrer">
+                          <Linkedin className="w-5 h-5 text-sky-accent" />
+                        </a>
                       </Button>
                       <Button
                         variant="outline"
                         size="icon"
+                        asChild
                         className="w-12 h-12 bg-sky-accent/20 hover:bg-sky-accent/40 border-sky-accent/30"
                       >
-                        <Github className="w-5 h-5 text-sky-accent" />
+                        <a href="https://github.com/asif-ikbal" target="_blank" rel="noopener noreferrer">
+                          <Github className="w-5 h-5 text-sky-accent" />
+                        </a>
                       </Button>
                     </div>
                   </CardContent>
