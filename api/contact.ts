@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { storage } from './storage.js';
-import { insertContactSchema } from '@shared/schema';
+import { insertContactSchema } from '@shared/schema.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Ensure the request is a POST request
