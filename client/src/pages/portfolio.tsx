@@ -18,23 +18,16 @@ import {
   X,
   Brain,
   Code,
-  Cog,
-  Cloud,
-  Trophy,
-  Star,
-  Award,
   CheckCircle,
   Send,
   Box,
   MessageSquare,
-  Bot,
-  Globe,
   Shield,
+  Globe,
   GraduationCap,
-  Tag,
-  Zap,
-  Target,
-  Database
+  Briefcase,
+  Star,
+  Award
 } from 'lucide-react';
 
 const Portfolio = () => {
@@ -82,76 +75,83 @@ const Portfolio = () => {
   });
 
   const phrases = [
-    "AI Data Annotation Expert",
-    "ML Operations Specialist", 
-    "Quality Assurance Lead",
+    "Data Annotation Manager",
+    "SFT & RLHF Specialist", 
+    "QA & QC Lead",
     "MLOps Integration Expert"
   ];
 
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
     { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
     { id: 'education', label: 'Education' },
     { id: 'contact', label: 'Contact' }
   ];
 
   const skills = [
-    { name: "AI/ML Expertise", icon: Brain, items: ["SFT", "RLHF", "HITL", "GenAI", "Computer Vision", "NLP"] },
-    { name: "Data Management", icon: Database, items: ["Large-scale Annotation", "Quality Assurance", "Pipeline Design", "Data Validation"] },
-    { name: "MLOps & DevOps", icon: Cloud, items: ["CI/CD", "Model Deployment", "Monitoring", "Workflow Automation"] },
-    { name: "Technical Tools", icon: Code, items: ["Python", "TensorFlow", "PyTorch", "Docker", "Kubernetes", "AWS"] }
+    { name: "Annotation Tools", icon: Box, items: ["Supervisely", "Encord", "SuperbAI", "SuperAnnotate", "V7", "Roboflow", "CVAT"] },
+    { name: "Project Management", icon: Briefcase, items: ["Agile/Scrum", "ClickUp", "Asana", "Trello", "Confluence"] },
+    { name: "Languages", icon: Code, items: ["Python", "JavaScript", "SQL"] },
+    { name: "Cloud & DevOps", icon: Globe, items: ["AWS", "GCP", "Azure", "Git", "GitHub"] }
   ];
 
   const experiences = [
     {
-      title: "AI Data Annotation Manager",
+      title: "Data Annotation Manager",
       company: "Appalux Global IT",
-      duration: "2023 - Present",
-      description: "Leading large-scale annotation projects for AI/ML models with focus on quality and efficiency.",
-      achievements: ["Managed 50M+ data points", "Improved quality by 25%", "Reduced costs by 30%"]
+      duration: "April 2024 - Present",
+      description: "Specializing in scalable annotation workflows for computer vision, NLP, and Generative AI. Responsible for QA/QC protocols, Human-in-the-Loop processes, and annotation schema development.",
+      achievements: ["Manage large-scale annotation pipelines", "Enforce SOPs for SFT, RLHF, and HITL", "Lead multi-tier annotation teams", "Maintain platforms like CVAT & Label Studio"]
     },
     {
       title: "Associate Delivery Lead", 
-      company: "Quantigo AI",
-      duration: "2022 - 2023",
-      description: "Implemented MLOps pipelines and quality assurance protocols for production AI systems.",
-      achievements: ["Deployed 20+ models", "Automated QA processes", "Reduced deployment time by 40%"]
+      company: "Quantigo AΙ",
+      duration: "December 2023 - April 2024",
+      description: "Oversaw comprehensive management of data annotation projects, integrating client collaboration, technical coordination, team training, and quality assurance.",
+      achievements: ["Led client engagement & requirements capture", "Built classification schemas", "Trained teams & enforced QC", "Allocated resources for high-volume projects"]
     },
     {
       title: "Associate",
       company: "Quantanite",
-      duration: "2021 - 2022", 
-      description: "Designed and implemented comprehensive QA workflows for AI annotation projects.",
-      achievements: ["Established QA standards", "Trained 50+ annotators", "Achieved 95% accuracy"]
+      duration: "January 2023 - December 2023", 
+      description: "Executed client assignments with precision, fostering collaboration to enhance task quality and supported supervisory functions to boost team performance.",
+      achievements: ["Supervised operational output", "Contributed to task accuracy", "Delivered client-ready deliverables", "Achieved 'Super Star' (Nov 2024) and 'Above & Beyond' (Jul 2024) awards"]
+    },
+    {
+      title: "Data Annotator",
+      company: "Bengali AI",
+      duration: "August 2022 - January 2023",
+      description: "Contributed to the Document Layout Analysis Project by producing high-precision annotations to support the digitization of Bengali language documents.",
+      achievements: ["Labeled documents for layout analysis", "Applied level box tools for structural accuracy"]
     }
   ];
 
   const projects = [
     {
-      title: "3D Point Cloud Annotation",
-      description: "Advanced annotation project for autonomous vehicle navigation systems with complex 3D segmentation.",
-      tech: ["Computer Vision", "3D Segmentation", "Autonomous Systems"],
+      title: "3D Point Cloud Segmentation",
+      description: "Led annotation for autonomous navigation systems, focusing on high-fidelity 3D point cloud segmentation.",
+      tech: ["Autonomous Navigation", "3D Point Clouds", "Segmentation"],
       icon: Box
     },
     {
-      title: "Conversational AI Training",
-      description: "Large-scale RLHF project for improving chatbot responses with human feedback loops.",
-      tech: ["NLP", "RLHF", "Human Feedback"],
+      title: "RLHF for Chatbot Optimization",
+      description: "Managed Reinforcement Learning with Human Feedback (RLHF) workflows to refine and optimize chatbot performance and safety.",
+      tech: ["RLHF", "Chatbots", "Generative AI"],
       icon: MessageSquare
     },
     {
-      title: "Medical Image Analysis",
-      description: "Annotation pipeline for medical imaging AI with strict quality and compliance requirements.",
-      tech: ["Medical AI", "Quality Assurance", "Compliance"],
+      title: "Defect Detection for Aerial Vehicles",
+      description: "Developed and managed annotation pipelines for an aerial vehicle defect detection system, ensuring high accuracy for critical safety applications.",
+      tech: ["Computer Vision", "Defect Detection", "QA"],
       icon: Shield
     },
     {
-      title: "Multilingual NLP Dataset",
-      description: "Cross-lingual annotation project for global AI applications with cultural sensitivity.",
-      tech: ["NLP", "Multilingual", "Cultural AI"],
+      title: "Multimodal Sentiment Classification",
+      description: "Oversaw a project for classifying sentiment and intent from multimodal data within the banking sector.",
+      tech: ["Multimodal AI", "NLP", "Sentiment Analysis"],
       icon: Globe
     }
   ];
@@ -169,7 +169,7 @@ const Portfolio = () => {
         setTypedText(currentPhraseText.slice(0, currentChar - 1));
         setCurrentChar(currentChar - 1);
       } else if (!isDeleting && currentChar === currentPhraseText.length) {
-        setTimeout(() => setIsDeleting(true), 1000);
+        setTimeout(() => setIsDeleting(true), 2000);
       } else if (isDeleting && currentChar === 0) {
         setIsDeleting(false);
         setCurrentPhrase((prev) => (prev + 1) % phrases.length);
@@ -301,8 +301,7 @@ const Portfolio = () => {
             </div>
             
             <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed">
-              AI Expert with CSE background specializing in scaling high-quality datasets across vision, NLP, and multimodal domains. 
-              Proven expertise in SFT, RLHF, and HITL operations with focus on MLOps integration and measurable performance uplift.
+              Data Annotation Manager with a CSE background and expertise in scaling high-quality datasets across vision, NLP, and multimodal domains.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -315,7 +314,7 @@ const Portfolio = () => {
               </button>
               
               <a
-                href="/resume.pdf"
+                href="/Asif_Ikbal_Resume.pdf"
                 download
                 className="px-8 py-4 border-2 border-[var(--accent-blue)] text-[var(--accent-blue)] font-semibold hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300 rounded-xl backdrop-blur-sm flex items-center justify-center gap-2"
               >
@@ -335,18 +334,13 @@ const Portfolio = () => {
               About Me
             </h2>
             
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-1 gap-12 items-center">
               <div className="modern-card animate-slide-in">
-                <h3 className="text-2xl font-semibold mb-4 gradient-text">AI Data Annotation Expert</h3>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  With a strong Computer Science and Engineering background, I specialize in managing large-scale 
-                  annotation pipelines for cutting-edge AI systems. My expertise spans computer vision, NLP, and 
-                  multimodal AI projects, ensuring high-quality data that drives successful model performance.
+                  I'm a Data Annotation Manager with a strong Computer Science and Engineering background, specializing in scaling high-quality datasets for vision, NLP, and multimodal AI. I have a proven track record in SFT, RLHF, and Human-in-the-Loop operations.
                 </p>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  I excel in designing robust workflows, implementing QA/QC protocols, and managing Human-in-the-Loop 
-                  processes that are essential for modern AI development. My work directly contributes to the advancement 
-                  of Generative AI, RLHF systems, and MLOps ecosystems.
+                  Adept in designing workflows, QA pipelines, and annotation schemas that align with MLOps ecosystems, I focus on delivering operational precision and cross-functional collaboration to achieve measurable model performance uplift.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center space-x-2">
@@ -363,70 +357,17 @@ const Portfolio = () => {
                   </div>
                 </div>
               </div>
-              
-              <div className="space-y-6">
-                <div className="modern-card animate-fade-in">
-                  <h4 className="text-xl font-semibold mb-3 gradient-text">Core Expertise</h4>
-                  <ul className="space-y-2 text-[var(--text-secondary)]">
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Large-scale annotation pipelines</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />SFT, RLHF, and HITL operations</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />QA/QC protocol design</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />MLOps integration</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Cross-functional collaboration</li>
-                  </ul>
-                </div>
-                
-                <div className="modern-card animate-fade-in">
-                  <h4 className="text-xl font-semibold mb-3 gradient-text">Data Formats</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {["COCO", "JSON", "Pascal VOC", "3D Point Clouds", "NER", "OCR"].map(format => (
-                      <Badge key={format} variant="secondary" className="bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]">
-                        {format}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="section bg-[var(--bg-secondary)]/50">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Technical Skills
-            </h2>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {skills.map((skill, index) => (
-                <div key={skill.name} className="modern-card animate-fade-in">
-                  <div className="flex items-center mb-4">
-                    <skill.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
-                    <h3 className="text-xl font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
-                  </div>
-                  <div className="space-y-2">
-                    {skill.items.map((item, idx) => (
-                      <div key={idx} className="text-[var(--text-secondary)] text-sm">
-                        • {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="section">
+      <section id="experience" className="section bg-[var(--bg-secondary)]/50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
-              Experience
+              Work Experience
             </h2>
             
             <div className="space-y-8">
@@ -437,7 +378,7 @@ const Portfolio = () => {
                       <h3 className="text-xl font-semibold gradient-text">{exp.title}</h3>
                       <p className="text-[var(--text-secondary)]">{exp.company}</p>
                     </div>
-                    <div className="text-[var(--accent-blue)] font-mono text-sm">
+                    <div className="text-[var(--accent-blue)] font-mono text-sm mt-2 md:mt-0">
                       {exp.duration}
                     </div>
                   </div>
@@ -449,6 +390,35 @@ const Portfolio = () => {
                       <Badge key={idx} variant="secondary" className="bg-[var(--accent-purple)]/20 text-[var(--accent-purple)]">
                         {achievement}
                       </Badge>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="section">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="section-title animate-fade-in-up">
+              Technical Strengths
+            </h2>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {skills.map((skill) => (
+                <div key={skill.name} className="modern-card animate-fade-in">
+                  <div className="flex items-center mb-4">
+                    <skill.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
+                    <h3 className="text-xl font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {skill.items.map((item, idx) => (
+                      <div key={idx} className="text-[var(--text-secondary)] text-sm">
+                        • {item}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -501,13 +471,13 @@ const Portfolio = () => {
             <div className="modern-card animate-fade-in text-center">
               <div className="flex items-center justify-center mb-4">
                 <GraduationCap className="w-8 h-8 text-[var(--accent-blue)] mr-3" />
-                <h3 className="text-2xl font-semibold gradient-text">Computer Science & Engineering</h3>
+                <h3 className="text-2xl font-semibold gradient-text">B.Sc. in Computer Science & Engineering</h3>
               </div>
               <p className="text-[var(--text-secondary)] text-lg mb-2">
-                Bachelor's Degree in Computer Science & Engineering
+                Bangladesh University of Business Technology, Dhaka
               </p>
               <p className="text-[var(--text-muted)]">
-                Specialized in AI/ML, Data Structures, and Software Engineering
+                2018 - 2022
               </p>
             </div>
           </div>
@@ -564,13 +534,17 @@ const Portfolio = () => {
                 
                 <div className="flex space-x-6 mt-8">
                   <a
-                    href="#"
+                    href="#" //TODO: Add LinkedIn URL
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
                   >
                     <Linkedin className="w-5 h-5" />
                   </a>
                   <a
-                    href="#"
+                    href="#" //TODO: Add GitHub URL
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
                   >
                     <Github className="w-5 h-5" />
@@ -656,7 +630,7 @@ const Portfolio = () => {
       <footer className="bg-[var(--bg-primary)] border-t border-[var(--border-color)] py-8">
         <div className="container mx-auto px-6 text-center">
           <p className="text-[var(--text-secondary)]">
-            © 2024 Asif Ikbal. All rights reserved.
+            © 2025 Asif Ikbal. All rights reserved.
           </p>
         </div>
       </footer>
