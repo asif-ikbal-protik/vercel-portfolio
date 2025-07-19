@@ -18,16 +18,23 @@ import {
   X,
   Brain,
   Code,
+  Cog,
+  Cloud,
+  Trophy,
+  Star,
+  Award,
   CheckCircle,
   Send,
   Box,
   MessageSquare,
-  Shield,
+  Bot,
   Globe,
+  Shield,
   GraduationCap,
-  Briefcase,
-  Star,
-  Award
+  Tag,
+  Zap,
+  Target,
+  Database
 } from 'lucide-react';
 
 const Portfolio = () => {
@@ -84,74 +91,70 @@ const Portfolio = () => {
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
-    { id: 'experience', label: 'Experience' },
     { id: 'skills', label: 'Skills' },
+    { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
     { id: 'education', label: 'Education' },
     { id: 'contact', label: 'Contact' }
   ];
 
+  // This data is now populated from your resume into your original structure
   const skills = [
-    { name: "Annotation Tools", icon: Box, items: ["Supervisely", "Encord", "SuperbAI", "SuperAnnotate", "V7", "Roboflow", "CVAT"] },
-    { name: "Project Management", icon: Briefcase, items: ["Agile/Scrum", "ClickUp", "Asana", "Trello", "Confluence"] },
-    { name: "Languages", icon: Code, items: ["Python", "JavaScript", "SQL"] },
-    { name: "Cloud & DevOps", icon: Globe, items: ["AWS", "GCP", "Azure", "Git", "GitHub"] }
+    { name: "AI/ML Expertise", icon: Brain, items: ["SFT", "RLHF", "HITL", "Computer Vision", "NLP", "Generative AI"] },
+    { name: "Data Management", icon: Database, items: ["Annotation Tools (CVAT, V7, etc.)", "Quality Assurance (QA/QC)", "Data Schemas", "COCO, JSON, Pascal VOC"] },
+    { name: "MLOps & DevOps", icon: Cloud, items: ["Agile/Scrum", "CI/CD Workflows", "AWS, GCP, Azure", "Git / GitHub"] },
+    { name: "Technical Tools", icon: Code, items: ["Python", "JavaScript", "SQL", "ClickUp, Asana", "Confluence"] }
   ];
 
+  // This data is now populated from your resume
   const experiences = [
     {
       title: "Data Annotation Manager",
       company: "Appalux Global IT",
-      duration: "April 2024 - Present",
-      description: "Specializing in scalable annotation workflows for computer vision, NLP, and Generative AI. Responsible for QA/QC protocols, Human-in-the-Loop processes, and annotation schema development.",
-      achievements: ["Manage large-scale annotation pipelines", "Enforce SOPs for SFT, RLHF, and HITL", "Lead multi-tier annotation teams", "Maintain platforms like CVAT & Label Studio"]
+      duration: "Apr 2024 - Present",
+      description: "Manage large-scale annotation pipelines for computer vision, NLP, and multimodal AI projects supporting SFT, RLHF, and HITL workflows.",
+      achievements: ["Lead multi-tier annotation teams", "Refine edge case handling", "Ensure SLA compliance", "Maintain annotation platforms"]
     },
     {
       title: "Associate Delivery Lead", 
       company: "Quantigo AΙ",
-      duration: "December 2023 - April 2024",
+      duration: "Dec 2023 - Apr 2024",
       description: "Oversaw comprehensive management of data annotation projects, integrating client collaboration, technical coordination, team training, and quality assurance.",
-      achievements: ["Led client engagement & requirements capture", "Built classification schemas", "Trained teams & enforced QC", "Allocated resources for high-volume projects"]
+      achievements: ["Led client engagement", "Built classification schemas", "Supported engineering partners", "Trained teams & enforced QC"]
     },
     {
       title: "Associate",
       company: "Quantanite",
-      duration: "January 2023 - December 2023", 
-      description: "Executed client assignments with precision, fostering collaboration to enhance task quality and supported supervisory functions to boost team performance.",
-      achievements: ["Supervised operational output", "Contributed to task accuracy", "Delivered client-ready deliverables", "Achieved 'Super Star' (Nov 2024) and 'Above & Beyond' (Jul 2024) awards"]
-    },
-    {
-      title: "Data Annotator",
-      company: "Bengali AI",
-      duration: "August 2022 - January 2023",
-      description: "Contributed to the Document Layout Analysis Project by producing high-precision annotations to support the digitization of Bengali language documents.",
-      achievements: ["Labeled documents for layout analysis", "Applied level box tools for structural accuracy"]
+      duration: "Jan 2023 - Dec 2023", 
+      description: "Executed client assignments with precision, fostering collaboration to enhance task quality and deliver consistently high standards.",
+      achievements: ["Supervised operational output", "Contributed to task accuracy", "Ensured efficiency", "Exceeded client expectations"]
     }
   ];
 
+  // This data is now populated from your resume
   const projects = [
     {
       title: "3D Point Cloud Segmentation",
-      description: "Led annotation for autonomous navigation systems, focusing on high-fidelity 3D point cloud segmentation.",
-      tech: ["Autonomous Navigation", "3D Point Clouds", "Segmentation"],
+      description: "Advanced annotation project for autonomous navigation systems with complex 3D segmentation.",
+      tech: ["Computer Vision", "3D Segmentation", "Autonomous Systems"],
       icon: Box
     },
     {
       title: "RLHF for Chatbot Optimization",
-      description: "Managed Reinforcement Learning with Human Feedback (RLHF) workflows to refine and optimize chatbot performance and safety.",
-      tech: ["RLHF", "Chatbots", "Generative AI"],
+      description: "Large-scale Reinforcement Learning with Human Feedback project for improving chatbot responses.",
+      tech: ["NLP", "RLHF", "Human Feedback"],
       icon: MessageSquare
     },
     {
       title: "Defect Detection for Aerial Vehicles",
-      description: "Developed and managed annotation pipelines for an aerial vehicle defect detection system, ensuring high accuracy for critical safety applications.",
-      tech: ["Computer Vision", "Defect Detection", "QA"],
+      description: "Annotation pipeline for an aerial vehicle defect detection system, ensuring high accuracy for critical safety applications.",
+      tech: ["Computer Vision", "Quality Assurance", "Defect Detection"],
       icon: Shield
     },
     {
       title: "Multimodal Sentiment Classification",
-      description: "Oversaw a project for classifying sentiment and intent from multimodal data within the banking sector.",
-      tech: ["Multimodal AI", "NLP", "Sentiment Analysis"],
+      description: "A project for classifying sentiment and intent from multimodal data within the banking sector.",
+      tech: ["Multimodal AI", "NLP", "Banking Sector"],
       icon: Globe
     }
   ];
@@ -169,7 +172,7 @@ const Portfolio = () => {
         setTypedText(currentPhraseText.slice(0, currentChar - 1));
         setCurrentChar(currentChar - 1);
       } else if (!isDeleting && currentChar === currentPhraseText.length) {
-        setTimeout(() => setIsDeleting(true), 2000);
+        setTimeout(() => setIsDeleting(true), 1000);
       } else if (isDeleting && currentChar === 0) {
         setIsDeleting(false);
         setCurrentPhrase((prev) => (prev + 1) % phrases.length);
@@ -301,6 +304,7 @@ const Portfolio = () => {
             </div>
             
             <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed">
+              {/* This text is from your resume */}
               Data Annotation Manager with a CSE background and expertise in scaling high-quality datasets across vision, NLP, and multimodal domains.
             </p>
             
@@ -334,13 +338,16 @@ const Portfolio = () => {
               About Me
             </h2>
             
-            <div className="grid md:grid-cols-1 gap-12 items-center">
+            {/* THIS SECTION'S STYLE IS NOW IDENTICAL TO YOUR ORIGINAL */}
+            <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="modern-card animate-slide-in">
+                <h3 className="text-2xl font-semibold mb-4 gradient-text">Operational Precision</h3>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  I'm a Data Annotation Manager with a strong Computer Science and Engineering background, specializing in scaling high-quality datasets for vision, NLP, and multimodal AI. I have a proven track record in SFT, RLHF, and Human-in-the-Loop operations.
+                  {/* This text is from your resume */}
+                  Proven track record in SFT, RLHF, and HITL operations. Adept in designing workflows, QA pipelines, and annotation schemas aligned with MLOps ecosystems.
                 </p>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  Adept in designing workflows, QA pipelines, and annotation schemas that align with MLOps ecosystems, I focus on delivering operational precision and cross-functional collaboration to achieve measurable model performance uplift.
+                  My focus is on delivering operational precision, cross-functional collaboration, and measurable model performance uplift.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center space-x-2">
@@ -357,17 +364,70 @@ const Portfolio = () => {
                   </div>
                 </div>
               </div>
+              
+              <div className="space-y-6">
+                <div className="modern-card animate-fade-in">
+                  <h4 className="text-xl font-semibold mb-3 gradient-text">Core Expertise</h4>
+                  <ul className="space-y-2 text-[var(--text-secondary)]">
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Large-scale annotation pipelines</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />SFT, RLHF, and HITL operations</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />QA/QC protocol design</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />MLOps integration</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Cross-functional collaboration</li>
+                  </ul>
+                </div>
+                
+                <div className="modern-card animate-fade-in">
+                  <h4 className="text-xl font-semibold mb-3 gradient-text">Data Formats</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {["COCO", "JSON", "Pascal VOC", "3D Point Clouds", "NER", "OCR"].map(format => (
+                      <Badge key={format} variant="secondary" className="bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]">
+                        {format}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="section bg-[var(--bg-secondary)]/50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="section-title animate-fade-in-up">
+              Technical Skills
+            </h2>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {skills.map((skill, index) => (
+                <div key={skill.name} className="modern-card animate-fade-in">
+                  <div className="flex items-center mb-4">
+                    <skill.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
+                    <h3 className="text-xl font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {skill.items.map((item, idx) => (
+                      <div key={idx} className="text-[var(--text-secondary)] text-sm">
+                        • {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="section bg-[var(--bg-secondary)]/50">
+      <section id="experience" className="section">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
-              Work Experience
+              Experience
             </h2>
             
             <div className="space-y-8">
@@ -378,7 +438,7 @@ const Portfolio = () => {
                       <h3 className="text-xl font-semibold gradient-text">{exp.title}</h3>
                       <p className="text-[var(--text-secondary)]">{exp.company}</p>
                     </div>
-                    <div className="text-[var(--accent-blue)] font-mono text-sm mt-2 md:mt-0">
+                    <div className="text-[var(--accent-blue)] font-mono text-sm">
                       {exp.duration}
                     </div>
                   </div>
@@ -390,35 +450,6 @@ const Portfolio = () => {
                       <Badge key={idx} variant="secondary" className="bg-[var(--accent-purple)]/20 text-[var(--accent-purple)]">
                         {achievement}
                       </Badge>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="section">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Technical Strengths
-            </h2>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {skills.map((skill) => (
-                <div key={skill.name} className="modern-card animate-fade-in">
-                  <div className="flex items-center mb-4">
-                    <skill.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
-                    <h3 className="text-xl font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
-                  </div>
-                  <div className="space-y-2">
-                    {skill.items.map((item, idx) => (
-                      <div key={idx} className="text-[var(--text-secondary)] text-sm">
-                        • {item}
-                      </div>
                     ))}
                   </div>
                 </div>
@@ -474,10 +505,11 @@ const Portfolio = () => {
                 <h3 className="text-2xl font-semibold gradient-text">B.Sc. in Computer Science & Engineering</h3>
               </div>
               <p className="text-[var(--text-secondary)] text-lg mb-2">
+                {/* This is now updated */}
                 Bangladesh University of Business Technology, Dhaka
               </p>
               <p className="text-[var(--text-muted)]">
-                2018 - 2022
+                2018-2022
               </p>
             </div>
           </div>
