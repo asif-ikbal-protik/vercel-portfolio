@@ -108,21 +108,21 @@ const Portfolio = () => {
   const experiences = [
     {
       title: "AI Data Annotation Manager",
-      company: "Tech Solutions Inc.",
+      company: "Appalux Global IT",
       duration: "2023 - Present",
       description: "Leading large-scale annotation projects for AI/ML models with focus on quality and efficiency.",
       achievements: ["Managed 50M+ data points", "Improved quality by 25%", "Reduced costs by 30%"]
     },
     {
-      title: "ML Operations Specialist", 
-      company: "DataCorp Ltd.",
+      title: "Associate Delivery Lead", 
+      company: "Quantigo AI",
       duration: "2022 - 2023",
       description: "Implemented MLOps pipelines and quality assurance protocols for production AI systems.",
       achievements: ["Deployed 20+ models", "Automated QA processes", "Reduced deployment time by 40%"]
     },
     {
-      title: "Quality Assurance Lead",
-      company: "AI Innovations",
+      title: "Associate",
+      company: "Quantanite",
       duration: "2021 - 2022", 
       description: "Designed and implemented comprehensive QA workflows for AI annotation projects.",
       achievements: ["Established QA standards", "Trained 50+ annotators", "Achieved 95% accuracy"]
