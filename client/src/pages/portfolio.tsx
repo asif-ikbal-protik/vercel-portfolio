@@ -566,7 +566,7 @@ const Portfolio = () => {
                 
                 <div className="flex space-x-6 mt-8">
                   <a
-                    href="#" //TODO: Add LinkedIn URL
+                    href="https://www.linkedin.com/in/improtik/" //TODO: Add LinkedIn URL
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
@@ -574,7 +574,7 @@ const Portfolio = () => {
                     <Linkedin className="w-5 h-5" />
                   </a>
                   <a
-                    href="#" //TODO: Add GitHub URL
+                    href="https://github.com/asif-ikbal-protik" //TODO: Add GitHub URL
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
