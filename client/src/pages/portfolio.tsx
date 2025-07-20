@@ -318,7 +318,7 @@ const Portfolio = () => {
               </button>
               
               <a
-                href="/Asif_Ikbal_Resume.pdf"
+                href="/public/Asif_Ikbal_Resume.pdf"
                 download
                 className="px-8 py-4 border-2 border-[var(--accent-blue)] text-[var(--accent-blue)] font-semibold hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300 rounded-xl backdrop-blur-sm flex items-center justify-center gap-2"
               >
