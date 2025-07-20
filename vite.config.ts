@@ -24,11 +24,4 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
-
-  server: {
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
-    },
-  },
 });
