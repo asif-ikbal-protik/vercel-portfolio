@@ -82,7 +82,7 @@ const Portfolio = () => {
   });
 
   const phrases = [
-    "Data Annotation Manager",
+    "Project Delivery Manager",
     "SFT & RLHF Specialist", 
     "QA & QC Lead",
     "MLOps Integration Expert"
@@ -109,11 +109,11 @@ const Portfolio = () => {
   // This data is now populated from your resume
   const experiences = [
     {
-      title: "Data Annotation Manager",
+      title: "Project Delivery Manager",
       company: "Appalux Global IT",
       duration: "Apr 2024 - Present",
-      description: "Manage large-scale annotation pipelines for computer vision, NLP, and multimodal AI projects supporting SFT, RLHF, and HITL workflows.",
-      achievements: ["Lead multi-tier annotation teams", "Refine edge case handling", "Ensure SLA compliance", "Maintain annotation platforms"]
+      description: "Leads AI workflow automation, internal tooling, and MVP development initiatives. Specializes in architecting and delivering modular, scalable automation systems using n8n, Make.com, Python-based microservices, and LLM orchestration. Drives cross-functional delivery execution, CI/CD alignment, and infrastructure-level fault tolerance across internal product lines.",
+      achievements: ["Architected scalable automation systems", "Integrated LLMs & Python microservices", "Led cross-functional delivery", "Ensured CI/CD alignment & fault tolerance"]
     },
     {
       title: "Associate Delivery Lead", 
@@ -128,6 +128,13 @@ const Portfolio = () => {
       duration: "Jan 2023 - Dec 2023", 
       description: "Executed client assignments with precision, fostering collaboration to enhance task quality and deliver consistently high standards.",
       achievements: ["Supervised operational output", "Contributed to task accuracy", "Ensured efficiency", "Exceeded client expectations"]
+    },
+    {
+      title: "Data Annotator",
+      company: "Bengali AI",
+      duration: "August 2022 – January 2023",
+      description: "Contributed to the Document Layout Analysis Project by producing high-precision annotations to support the digitization of Bengali language documents. Applied judgment in annotation decisions and utilized level box tools for structural accuracy.",
+      achievements: ["Produced high-precision annotations", "Supported Bengali document digitization", "Utilized level box tools for accuracy"]
     }
   ];
 
