@@ -111,21 +111,21 @@ const Portfolio = () => {
     {
       title: "Project Delivery Manager",
       company: "Appalux Global IT",
-      duration: "Apr 2024 - Present",
+      duration: "April 2024 - Present",
       description: "Leads AI workflow automation, internal tooling, and MVP development initiatives. Specializes in architecting and delivering modular, scalable automation systems using n8n, Make.com, Python-based microservices, and LLM orchestration. Drives cross-functional delivery execution, CI/CD alignment, and infrastructure-level fault tolerance across internal product lines.",
       achievements: ["Architected scalable automation systems", "Integrated LLMs & Python microservices", "Led cross-functional delivery", "Ensured CI/CD alignment & fault tolerance"]
     },
     {
       title: "Associate Delivery Lead", 
       company: "Quantigo AΙ",
-      duration: "Dec 2023 - Apr 2024",
+      duration: "December 2023 - April 2024",
       description: "Oversaw comprehensive management of data annotation projects, integrating client collaboration, technical coordination, team training, and quality assurance.",
       achievements: ["Led client engagement", "Built classification schemas", "Supported engineering partners", "Trained teams & enforced QC"]
     },
     {
       title: "Associate",
       company: "Quantanite",
-      duration: "Jan 2023 - Dec 2023", 
+      duration: "January 2023 - December 2023", 
       description: "Executed client assignments with precision, fostering collaboration to enhance task quality and deliver consistently high standards.",
       achievements: ["Supervised operational output", "Contributed to task accuracy", "Ensured efficiency", "Exceeded client expectations"]
     },
