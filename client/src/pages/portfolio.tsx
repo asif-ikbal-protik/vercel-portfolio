@@ -224,18 +224,17 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#020617] relative text-[var(--text-primary)]">
-      {/* Dark Sphere Grid Background */}
+    <div className="min-h-screen w-full bg-black relative text-[var(--text-primary)]">
+      {/* Black Basic Grid Background */}
       <div
         className="absolute inset-0 z-0"
         style={{
-          background: "#020617",
+          background: "#000000",
           backgroundImage: `
-            linear-gradient(to right, rgba(71,85,105,0.3) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(71,85,105,0.3) 1px, transparent 1px),
-            radial-gradient(circle at 50% 50%, rgba(139,92,246,0.15) 0%, transparent 70%)
+            linear-gradient(to right, rgba(75, 85, 99, 0.4) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(75, 85, 99, 0.4) 1px, transparent 1px)
           `,
-          backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+          backgroundSize: "40px 40px",
         }}
       />
 
