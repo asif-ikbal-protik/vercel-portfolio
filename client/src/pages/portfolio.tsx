@@ -99,11 +99,28 @@ const Portfolio = () => {
   ];
 
   const skills = [
-    { name: "AI/ML Expertise", icon: Brain, items: ["SFT", "RLHF", "HITL", "Computer Vision", "NLP", "Generative AI"] },
-    { name: "Data Management", icon: Database, items: ["Annotation Tools (CVAT, V7, etc.)", "Quality Assurance (QA/QC)", "Data Schemas", "COCO, JSON, Pascal VOC"] },
-    { name: "MLOps & DevOps", icon: Cloud, items: ["Agile/Scrum", "CI/CD Workflows", "AWS, GCP, Azure", "Git / GitHub"] },
-    { name: "Technical Tools", icon: Code, items: ["Python", "JavaScript", "SQL", "ClickUp, Asana", "Confluence"] }
+    { 
+      name: "AI/ML Expertise", 
+      icon: Brain, 
+      items: ["Prompt Engineering", "LLM Integration", "RLHF", "Computer Vision", "Multimodal AI", "Model Evaluation"] 
+    },
+    { 
+      name: "Data Operations", 
+      icon: Database, 
+      items: ["Dataset Curation", "Annotation Workflows", "Label Studio, V7, CVAT", "QA/QC Pipelines", "Schema Design", "COCO, JSON, YOLO Formats"] 
+    },
+    { 
+      name: "MLOps & Infrastructure", 
+      icon: Cloud, 
+      items: ["Docker, Kubernetes", "CI/CD (GitHub Actions, GitLab CI)", "Cloud Storage (S3, GCS)", "Workflow Orchestration", "Monitoring & Logging"] 
+    },
+    { 
+      name: "Tooling & Automation", 
+      icon: Code, 
+      items: ["Python, JavaScript", "n8n, Make.com", "FastAPI, Node.js", "PostgreSQL, Redis", "ClickUp, Confluence"] 
+    }
   ];
+  
 
   const experiences = [
     {
