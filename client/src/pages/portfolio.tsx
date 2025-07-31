@@ -112,7 +112,7 @@ const Portfolio = () => {
     { 
       name: "MLOps & Infrastructure", 
       icon: Cloud, 
-      items: ["Docker, Kubernetes", "CI/CD (GitHub Actions, GitLab CI)", "Cloud Storage (S3, GCS)", "Workflow Orchestration", "Monitoring & Logging"] 
+      items: ["Docker, Kubernetes", "CI/CD (GitHub, GitLab CI)", "Cloud Storage (S3, GCS)", "Workflow Orchestration", "Monitoring & Logging"] 
     },
     { 
       name: "Tooling & Automation", 
