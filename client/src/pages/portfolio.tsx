@@ -98,7 +98,6 @@ const Portfolio = () => {
     { id: 'contact', label: 'Contact' }
   ];
 
-  // This data is now populated from your resume into your original structure
   const skills = [
     { name: "AI/ML Expertise", icon: Brain, items: ["SFT", "RLHF", "HITL", "Computer Vision", "NLP", "Generative AI"] },
     { name: "Data Management", icon: Database, items: ["Annotation Tools (CVAT, V7, etc.)", "Quality Assurance (QA/QC)", "Data Schemas", "COCO, JSON, Pascal VOC"] },
@@ -106,7 +105,6 @@ const Portfolio = () => {
     { name: "Technical Tools", icon: Code, items: ["Python", "JavaScript", "SQL", "ClickUp, Asana", "Confluence"] }
   ];
 
-  // This data is now populated from your resume
   const experiences = [
     {
       title: "Project Delivery Manager",
@@ -138,7 +136,6 @@ const Portfolio = () => {
     }
   ];
 
-  // This data is now populated from your resume
   const projects = [
     {
       title: "3D Point Cloud Segmentation",
@@ -227,21 +224,20 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-x-hidden">
-      {/* Subtle particle background */}
-      <div className="particle-bg">
-        {Array.from({ length: 30 }).map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-            }}
-          />
-        ))}
-      </div>
+    <div className="min-h-screen w-full bg-[#020617] relative text-[var(--text-primary)]">
+      {/* Dark Sphere Grid Background */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background: "#020617",
+          backgroundImage: `
+            linear-gradient(to right, rgba(71,85,105,0.3) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(71,85,105,0.3) 1px, transparent 1px),
+            radial-gradient(circle at 50% 50%, rgba(139,92,246,0.15) 0%, transparent 70%)
+          `,
+          backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+        }}
+      />
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--bg-primary)]/95 backdrop-blur-md border-b border-[var(--border-color)]">
@@ -295,8 +291,8 @@ const Portfolio = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative">
-        <div className="container mx-auto px-6 text-center relative z-10">
+      <section id="home" className="min-h-screen flex items-center justify-center relative z-10">
+        <div className="container mx-auto px-6 text-center">
           <div className="max-w-4xl mx-auto animate-fade-in-up">
             <div className="w-32 h-32 mx-auto mb-8 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center animate-float">
               <Brain className="w-12 h-12 text-[var(--accent-blue)] animate-pulse-slow" />
@@ -311,7 +307,6 @@ const Portfolio = () => {
             </div>
             
             <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed">
-              {/* This text is from your resume */}
               Data Annotation Manager with a CSE background and expertise in scaling high-quality datasets across vision, NLP, and multimodal domains.
             </p>
             
@@ -338,19 +333,17 @@ const Portfolio = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="section">
+      <section id="about" className="section relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
               About Me
             </h2>
             
-            {/* THIS SECTION'S STYLE IS NOW IDENTICAL TO YOUR ORIGINAL */}
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="modern-card animate-slide-in">
                 <h3 className="text-2xl font-semibold mb-4 gradient-text">Operational Precision</h3>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  {/* This text is from your resume */}
                   Proven track record in SFT, RLHF, and HITL operations. Adept in designing workflows, QA pipelines, and annotation schemas aligned with MLOps ecosystems.
                 </p>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
@@ -401,7 +394,7 @@ const Portfolio = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="section bg-[var(--bg-secondary)]/50">
+      <section id="skills" className="section bg-[var(--bg-secondary)]/50 relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
@@ -430,7 +423,7 @@ const Portfolio = () => {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="section">
+      <section id="experience" className="section relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
@@ -467,7 +460,7 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="section bg-[var(--bg-secondary)]/50">
+      <section id="projects" className="section bg-[var(--bg-secondary)]/50 relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
@@ -499,7 +492,7 @@ const Portfolio = () => {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="section">
+      <section id="education" className="section relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
@@ -512,7 +505,6 @@ const Portfolio = () => {
                 <h3 className="text-2xl font-semibold gradient-text">B.Sc. in Computer Science & Engineering</h3>
               </div>
               <p className="text-[var(--text-secondary)] text-lg mb-2">
-                {/* This is now updated */}
                 Bangladesh University of Business Technology, Dhaka
               </p>
               <p className="text-[var(--text-muted)]">
@@ -524,7 +516,7 @@ const Portfolio = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section bg-[var(--bg-secondary)]/50">
+      <section id="contact" className="section bg-[var(--bg-secondary)]/50 relative z-10">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <h2 className="section-title animate-fade-in-up">
@@ -573,7 +565,7 @@ const Portfolio = () => {
                 
                 <div className="flex space-x-6 mt-8">
                   <a
-                    href="https://www.linkedin.com/in/improtik/" //TODO: Add LinkedIn URL
+                    href="https://www.linkedin.com/in/improtik/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
@@ -581,7 +573,7 @@ const Portfolio = () => {
                     <Linkedin className="w-5 h-5" />
                   </a>
                   <a
-                    href="https://github.com/asif-ikbal-protik" //TODO: Add GitHub URL
+                    href="https://github.com/asif-ikbal-protik"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
@@ -666,7 +658,7 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[var(--bg-primary)] border-t border-[var(--border-color)] py-8">
+      <footer className="bg-[var(--bg-primary)] border-t border-[var(--border-color)] py-8 relative z-10">
         <div className="container mx-auto px-6 text-center">
           <p className="text-[var(--text-secondary)]">
             © 2025 Asif Ikbal. All rights reserved.
