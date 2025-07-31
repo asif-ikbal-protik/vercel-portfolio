@@ -385,18 +385,19 @@ const Portfolio = () => {
                 <div className="modern-card animate-fade-in">
                   <h4 className="text-xl font-semibold mb-3 gradient-text">Core Expertise</h4>
                   <ul className="space-y-2 text-[var(--text-secondary)]">
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Large-scale annotation pipelines</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />SFT, RLHF, and HITL operations</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />LLM-integrated automation workflows</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Scalable data annotation & curation pipelines</li>
                     <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />QA/QC protocol design</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />MLOps integration</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />MLOps and CI/CD orchestrationn</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Toolchain design using n8n, Make.com, Python services</li>
                     <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Cross-functional collaboration</li>
                   </ul>
                 </div>
                 
                 <div className="modern-card animate-fade-in">
-                  <h4 className="text-xl font-semibold mb-3 gradient-text">Data Formats</h4>
+                  <h4 className="text-xl font-semibold mb-3 gradient-text">Automation & Workflow Tools</h4>
                   <div className="flex flex-wrap gap-2">
-                    {["COCO", "JSON", "Pascal VOC", "3D Point Clouds", "NER", "OCR"].map(format => (
+                    {["n8n", "Make.com", "Python Microservices", "FastAPI", "GitHub Actions", "ClickUp", "Notion"].map(format => (
                       <Badge key={format} variant="secondary" className="bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]">
                         {format}
                       </Badge>
