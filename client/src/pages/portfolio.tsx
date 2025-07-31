@@ -306,7 +306,11 @@ const Portfolio = () => {
             </div>
             
             <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed">
-              Data Annotation Manager with a CSE background and expertise in scaling high-quality datasets across vision, NLP, and multimodal domains.
+            Project Delivery Manager with a CSE background specializing in AI workflow automation, Gen AI, computer vision, MVP development, and scalable system delivery. He leads the design and implementation
+of LLM-integrated automation pipelines using tools like n8n, Make.com, and Python microservices, ensuring CI/CD alignment and fault-tolerant architectures. With prior experience managing high-volume
+data annotation projects supporting SFT, RLHF, and HITL workflows, he combines deep expertise in
+schema design, QA systems, and cross-functional coordination to deliver modular, production-ready AI
+solutions.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
