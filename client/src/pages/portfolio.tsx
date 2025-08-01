@@ -7,6 +7,9 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
+import ParticleBackground from '@/components/ParticleBackground';
+import AnimatedSkillBar from '@/components/AnimatedSkillBar';
+import InteractiveProjectCard from '@/components/InteractiveProjectCard';
 import { 
   Mail, 
   Phone, 
@@ -242,6 +245,9 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen w-full bg-black relative text-[var(--text-primary)]">
+      {/* Interactive Particle Background */}
+      <ParticleBackground />
+      
       {/* Black Basic Grid Background */}
       <div
         className="absolute inset-0 z-0"
