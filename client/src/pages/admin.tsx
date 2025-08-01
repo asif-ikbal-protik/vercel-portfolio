@@ -6,14 +6,26 @@ import { Button } from '@/components/ui/button';
 import { getQueryFn } from '@/lib/queryClient';
 import { Mail, Eye, Calendar, User, MessageSquare, TrendingUp } from 'lucide-react';
 import { format } from 'date-fns';
+import type { Contact, PortfolioView } from '../../../shared/schema';
+
+interface ContactsResponse {
+  success: boolean;
+  contacts: Contact[];
+}
+
+interface ViewsResponse {
+  success: boolean;
+  views: PortfolioView[];
+  total: number;
+}
 
 const AdminDashboard = () => {
-  const { data: contactsData } = useQuery({
+  const { data: contactsData } = useQuery<ContactsResponse>({
     queryKey: ['/api/contacts'],
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
 
-  const { data: viewsData } = useQuery({
+  const { data: viewsData } = useQuery<ViewsResponse>({
     queryKey: ['/api/portfolio-views'],
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
@@ -34,7 +46,7 @@ const AdminDashboard = () => {
 
         {/* Stats Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-dark-surface border-sky-accent/30">
+          <Card className="bg-dark-surface border-sky-accent/30 shadow-glow-blue hover:shadow-glow-hover">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-subtext">Total Portfolio Views</CardTitle>
               <Eye className="h-4 w-4 text-sky-accent" />
@@ -45,7 +57,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-dark-surface border-cyan-accent/30">
+          <Card className="bg-dark-surface border-cyan-accent/30 shadow-glow-cyan hover:shadow-glow-hover">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-subtext">Contact Messages</CardTitle>
               <MessageSquare className="h-4 w-4 text-cyan-accent" />
@@ -56,14 +68,14 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-dark-surface border-sky-accent/30">
+          <Card className="bg-dark-surface border-sky-accent/30 shadow-glow-purple hover:shadow-glow-hover">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-subtext">Recent Activity</CardTitle>
               <TrendingUp className="h-4 w-4 text-sky-accent" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-sky-accent">
-                {views.filter(v => new Date(v.created_at) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length}
+                {views.filter((v: PortfolioView) => new Date(v.created_at) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length}
               </div>
               <p className="text-xs text-subtext">Views in last 24h</p>
             </CardContent>
@@ -71,7 +83,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Contact Messages */}
-        <Card className="mb-8 bg-dark-surface border-sky-accent/30">
+        <Card className="mb-8 bg-dark-surface border-sky-accent/30 shadow-glow-gradient hover:shadow-glow-hover">
           <CardHeader>
             <CardTitle className="text-xl text-sky-accent flex items-center">
               <Mail className="w-5 h-5 mr-2" />
@@ -83,7 +95,7 @@ const AdminDashboard = () => {
               {contacts.length === 0 ? (
                 <p className="text-subtext text-center py-8">No messages yet</p>
               ) : (
-                contacts.map((contact: any) => (
+                contacts.map((contact: Contact) => (
                   <div key={contact.id} className="border border-sky-accent/20 rounded-lg p-4 bg-midnight/50">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center space-x-3">
@@ -105,7 +117,7 @@ const AdminDashboard = () => {
         </Card>
 
         {/* Portfolio Views */}
-        <Card className="bg-dark-surface border-cyan-accent/30">
+        <Card className="bg-dark-surface border-cyan-accent/30 shadow-glow-gradient hover:shadow-glow-hover">
           <CardHeader>
             <CardTitle className="text-xl text-cyan-accent flex items-center">
               <Eye className="w-5 h-5 mr-2" />
@@ -117,7 +129,7 @@ const AdminDashboard = () => {
               {views.length === 0 ? (
                 <p className="text-subtext text-center py-8">No views tracked yet</p>
               ) : (
-                views.slice(0, 10).map((view: any) => (
+                views.slice(0, 10).map((view: PortfolioView) => (
                   <div key={view.id} className="flex items-center justify-between border border-cyan-accent/20 rounded-lg p-3 bg-midnight/50">
                     <div className="flex items-center space-x-3">
                       <Calendar className="w-4 h-4 text-cyan-accent" />
@@ -127,9 +139,6 @@ const AdminDashboard = () => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className="text-xs text-subtext">{view.ip_address}</span>
-                      <Badge variant="outline" className="text-xs border-cyan-accent/30 text-cyan-accent">
-                        View
-                      </Badge>
                     </div>
                   </div>
                 ))

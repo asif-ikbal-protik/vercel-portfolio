@@ -357,7 +357,7 @@ const Portfolio = () => {
             </h2>
             
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="modern-card animate-slide-in">
+              <div className="modern-card glow-blue animate-slide-in">
                 <h3 className="text-2xl font-semibold mb-4 gradient-text">Operational Precision</h3>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
                   Proven track record in SFT, RLHF, and HITL operations. Adept in designing workflows, QA pipelines, and annotation schemas aligned with MLOps ecosystems.
@@ -382,7 +382,7 @@ const Portfolio = () => {
               </div>
               
               <div className="space-y-6">
-                <div className="modern-card animate-fade-in">
+                <div className="modern-card glow-purple animate-fade-in">
                   <h4 className="text-xl font-semibold mb-3 gradient-text">Core Expertise</h4>
                   <ul className="space-y-2 text-[var(--text-secondary)]">
                     <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />LLM-integrated automation workflows</li>
@@ -394,7 +394,7 @@ const Portfolio = () => {
                   </ul>
                 </div>
                 
-                <div className="modern-card animate-fade-in">
+                <div className="modern-card glow-cyan animate-fade-in">
                   <h4 className="text-xl font-semibold mb-3 gradient-text">Automation & Workflow Tools</h4>
                   <div className="flex flex-wrap gap-2">
                     {["n8n", "Make.com", "Python Microservices", "FastAPI", "GitHub Actions", "ClickUp", "Notion"].map(format => (
@@ -420,7 +420,7 @@ const Portfolio = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {skills.map((skill, index) => (
-                <div key={skill.name} className="modern-card animate-fade-in">
+                <div key={skill.name} className="modern-card glow-gradient animate-fade-in">
                   <div className="flex items-center mb-4">
                     <skill.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
                     <h3 className="text-xl font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
@@ -449,7 +449,7 @@ const Portfolio = () => {
             
             <div className="space-y-8">
               {experiences.map((exp, index) => (
-                <div key={index} className="modern-card animate-slide-in">
+                <div key={index} className="modern-card glow-blue animate-slide-in">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                     <div>
                       <h3 className="text-xl font-semibold gradient-text">{exp.title}</h3>
@@ -486,7 +486,7 @@ const Portfolio = () => {
             
             <div className="grid md:grid-cols-2 gap-8">
               {projects.map((project, index) => (
-                <div key={index} className="modern-card animate-fade-in">
+                <div key={index} className="modern-card glow-purple animate-fade-in">
                   <div className="flex items-center mb-4">
                     <project.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
                     <h3 className="text-xl font-semibold gradient-text">{project.title}</h3>
@@ -516,7 +516,7 @@ const Portfolio = () => {
               Education
             </h2>
             
-            <div className="modern-card animate-fade-in text-center">
+            <div className="modern-card glow-cyan animate-fade-in text-center">
               <div className="flex items-center justify-center mb-4">
                 <GraduationCap className="w-8 h-8 text-[var(--accent-blue)] mr-3" />
                 <h3 className="text-2xl font-semibold gradient-text">B.Sc. in Computer Science & Engineering</h3>
@@ -585,7 +585,7 @@ const Portfolio = () => {
                     href="https://www.linkedin.com/in/improtik/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
+                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
                   >
                     <Linkedin className="w-5 h-5" />
                   </a>
@@ -593,7 +593,7 @@ const Portfolio = () => {
                     href="https://github.com/asif-ikbal-protik"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
+                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
                   >
                     <Github className="w-5 h-5" />
                   </a>
