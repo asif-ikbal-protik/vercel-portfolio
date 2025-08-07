@@ -672,10 +672,30 @@ body {
   border-radius: 12px;
   overflow: hidden;
   background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
 }
 
 .calendly-inline-widget iframe {
   border-radius: 12px;
+  background: var(--bg-tertiary);
+}
+
+/* Dark theme for Calendly widget - using CSS custom properties */
+.calendly-inline-widget {
+  --calendly-bg: #000000;
+  --calendly-text: #ffffff;
+  --calendly-border: var(--border-color);
+}
+
+/* Override Calendly's default styling */
+.calendly-inline-widget iframe {
+  background: var(--bg-tertiary) !important;
+}
+
+/* Additional dark styling */
+.calendly-inline-widget {
+  background: var(--bg-tertiary);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
 }
 
 /* Subtle particle background */

@@ -24,6 +24,9 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className 
     };
   }, []);
 
+  // Add dark theme parameter to Calendly URL
+  const darkThemeUrl = `${calendlyUrl}?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=22c55e`;
+
   return (
     <div className={`modern-card glow-green animate-fade-in ${className}`}>
       <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -54,7 +57,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className 
         <div className="flex justify-center md:justify-end">
           <div 
             className="calendly-inline-widget"
-            data-url={calendlyUrl}
+            data-url={darkThemeUrl}
             style={{ minWidth: '400px', height: '600px', width: '100%', maxWidth: '500px' }}
           />
         </div>
