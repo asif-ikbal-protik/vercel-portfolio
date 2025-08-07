@@ -537,7 +537,7 @@ const Portfolio = () => {
       {/* Contact Section */}
       <section id="contact" className="section bg-[var(--bg-secondary)]/50 relative z-10">
         <div className="container mx-auto px-6">
-          <div className="max-w-2xl mx-auto flex flex-col gap-8">
+          <div className="max-w-6xl mx-auto flex flex-col gap-8">
             <h2 className="section-title animate-fade-in-up">
               Get In Touch
             </h2>
