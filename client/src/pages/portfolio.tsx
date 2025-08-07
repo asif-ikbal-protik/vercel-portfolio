@@ -611,64 +611,6 @@ const Portfolio = () => {
             </div>
             
             <div className="grid md:grid-cols-2 gap-12">
-              <div className="animate-slide-in">
-                <h3 className="text-2xl font-semibold mb-6 gradient-text">Let's Work Together</h3>
-                <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
-                  I'm always interested in discussing new opportunities in AI data annotation, 
-                  MLOps, and quality assurance. Let's connect and explore how we can collaborate.
-                </p>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <Mail className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Email</p>
-                      <p className="text-[var(--text-secondary)]">asifikbalprotik@gmail.com</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Phone</p>
-                      <p className="text-[var(--text-secondary)]">+8801878044854</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Location</p>
-                      <p className="text-[var(--text-secondary)]">Dhaka, Bangladesh</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex space-x-6 mt-8">
-                  <a
-                    href="https://www.linkedin.com/in/improtik/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://github.com/asif-ikbal-protik"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
               
               <div className="contact-form animate-fade-in">
                 <form onSubmit={handleContactSubmit} className="space-y-6">

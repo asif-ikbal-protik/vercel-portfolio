@@ -1,20 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Calendar, Clock } from 'lucide-react';
 import { CALENDLY_CONFIG } from '@/config/calendly';
-
-// Declare Calendly type for TypeScript
-declare global {
-  interface Window {
-    Calendly?: {
-      initInlineWidget: (options: { 
-        url: string;
-        parentElement: HTMLElement;
-        minWidth?: string;
-        height?: string;
-      }) => void;
-    };
-  }
-}
 
 interface CalendlyWidgetProps {
   calendlyUrl: string;
@@ -22,26 +8,11 @@ interface CalendlyWidgetProps {
 }
 
 const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className = '' }) => {
-  const widgetRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // Load Calendly script
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
     script.async = true;
-    
-    script.onload = () => {
-      // Initialize inline widget after script loads
-      if (window.Calendly && widgetRef.current) {
-        window.Calendly.initInlineWidget({
-          url: calendlyUrl,
-          parentElement: widgetRef.current,
-          minWidth: '320px',
-          height: '700px'
-        });
-      }
-    };
-    
     document.body.appendChild(script);
 
     return () => {
@@ -51,7 +22,7 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className 
         document.body.removeChild(existingScript);
       }
     };
-  }, [calendlyUrl]);
+  }, []);
 
   return (
     <div className={`modern-card glow-green animate-fade-in ${className}`}>
@@ -77,10 +48,10 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className 
         </div>
       </div>
       
-      {/* Calendly Inline Widget Container */}
+      {/* Calendly Inline Widget */}
       <div 
-        ref={widgetRef}
         className="calendly-inline-widget"
+        data-url={calendlyUrl}
         style={{ minWidth: '320px', height: '700px' }}
       />
     </div>
