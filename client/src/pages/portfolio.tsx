@@ -537,150 +537,138 @@ const Portfolio = () => {
       {/* Contact Section */}
       <section id="contact" className="section bg-[var(--bg-secondary)]/50 relative z-10">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-2xl mx-auto flex flex-col gap-8">
             <h2 className="section-title animate-fade-in-up">
               Get In Touch
             </h2>
-            
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div>
-                <CalendlyWidget 
-                  calendlyUrl={CALENDLY_CONFIG.CALENDLY_URL} 
-                  className="h-full"
-                />
+
+            {/* Calendly Widget */}
+            <CalendlyWidget 
+              calendlyUrl={CALENDLY_CONFIG.CALENDLY_URL} 
+              className="w-full"
+            />
+
+            {/* Contact Info */}
+            <div className="animate-slide-in">
+              <h3 className="text-2xl font-semibold mb-6 gradient-text">Let's Work Together</h3>
+              <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
+                I'm always interested in discussing new opportunities in AI data annotation, 
+                MLOps, and quality assurance. Let's connect and explore how we can collaborate.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-[var(--accent-blue)]" />
+                  </div>
+                  <div>
+                    <p className="text-[var(--text-primary)] font-medium">Email</p>
+                    <p className="text-[var(--text-secondary)]">asifikbalprotik@gmail.com</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
+                    <Phone className="w-5 h-5 text-[var(--accent-blue)]" />
+                  </div>
+                  <div>
+                    <p className="text-[var(--text-primary)] font-medium">Phone</p>
+                    <p className="text-[var(--text-secondary)]">+8801878044854</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-[var(--accent-blue)]" />
+                  </div>
+                  <div>
+                    <p className="text-[var(--text-primary)] font-medium">Location</p>
+                    <p className="text-[var(--text-secondary)]">Dhaka, Bangladesh</p>
+                  </div>
+                </div>
               </div>
-              
-              <div className="animate-slide-in">
-                <h3 className="text-2xl font-semibold mb-6 gradient-text">Let's Work Together</h3>
-                <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
-                  I'm always interested in discussing new opportunities in AI data annotation, 
-                  MLOps, and quality assurance. Let's connect and explore how we can collaborate.
-                </p>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <Mail className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Email</p>
-                      <p className="text-[var(--text-secondary)]">asifikbalprotik@gmail.com</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Phone</p>
-                      <p className="text-[var(--text-secondary)]">+8801878044854</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Location</p>
-                      <p className="text-[var(--text-secondary)]">Dhaka, Bangladesh</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex space-x-6 mt-8">
-                  <a
-                    href="https://www.linkedin.com/in/improtik/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://github.com/asif-ikbal-protik"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
-                </div>
+              <div className="flex space-x-6 mt-8">
+                <a
+                  href="https://www.linkedin.com/in/improtik/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://github.com/asif-ikbal-protik"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
+                >
+                  <Github className="w-5 h-5" />
+                </a>
               </div>
             </div>
-            
-            <div className="grid md:grid-cols-2 gap-12">
-              
-              <div className="contact-form animate-fade-in">
-                <form onSubmit={handleContactSubmit} className="space-y-6">
-                  <div>
-                    <Label htmlFor="name" className="text-[var(--text-primary)] font-medium">Name</Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      className="form-input mt-2"
-                      value={contactForm.name}
-                      onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="email" className="text-[var(--text-primary)] font-medium">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      className="form-input mt-2"
-                      value={contactForm.email}
-                      onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="subject" className="text-[var(--text-primary)] font-medium">Subject</Label>
-                    <Input
-                      id="subject"
-                      type="text"
-                      className="form-input mt-2"
-                      value={contactForm.subject}
-                      onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="message" className="text-[var(--text-primary)] font-medium">Message</Label>
-                    <Textarea
-                      id="message"
-                      rows={4}
-                      className="form-input mt-2"
-                      value={contactForm.message}
-                      onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
-                      required
-                    />
-                  </div>
-                  
-                  <Button
-                    type="submit"
-                    disabled={contactMutation.isPending}
-                    className="modern-button w-full py-3 font-semibold text-lg flex items-center justify-center gap-2"
-                  >
-                    {contactMutation.isPending ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
+
+            {/* Contact Form */}
+            <div className="contact-form animate-fade-in">
+              <form onSubmit={handleContactSubmit} className="space-y-6">
+                <div>
+                  <Label htmlFor="name" className="text-[var(--text-primary)] font-medium">Name</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    className="form-input mt-2"
+                    value={contactForm.name}
+                    onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="text-[var(--text-primary)] font-medium">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    className="form-input mt-2"
+                    value={contactForm.email}
+                    onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="subject" className="text-[var(--text-primary)] font-medium">Subject</Label>
+                  <Input
+                    id="subject"
+                    type="text"
+                    className="form-input mt-2"
+                    value={contactForm.subject}
+                    onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="message" className="text-[var(--text-primary)] font-medium">Message</Label>
+                  <Textarea
+                    id="message"
+                    rows={4}
+                    className="form-input mt-2"
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={contactMutation.isPending}
+                  className="modern-button w-full py-3 font-semibold text-lg flex items-center justify-center gap-2"
+                >
+                  {contactMutation.isPending ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </Button>
+              </form>
             </div>
           </div>
         </div>
