@@ -486,7 +486,7 @@ const Portfolio = () => {
               Featured Projects
             </h2>
             
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {projects.map((project, index) => (
                 <div key={index} className="modern-card glow-purple animate-fade-in">
                   <div className="flex items-center mb-4">
@@ -548,7 +548,7 @@ const Portfolio = () => {
               className="w-full"
             />
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Contact Info */}
               <div className="animate-slide-in">
                 <h3 className="text-2xl font-semibold mb-6 gradient-text">Let's Work Together</h3>

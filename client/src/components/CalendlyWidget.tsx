@@ -29,36 +29,40 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className 
 
   return (
     <div className={`modern-card glow-green animate-fade-in ${className}`}>
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        {/* Left Side - Schedule a Meeting Content */}
-        <div className="text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start mb-6">
-            <Calendar className="w-10 h-10 text-[var(--accent-green)] mr-4" />
-            <h3 className="text-3xl font-semibold gradient-text">Schedule a Meeting</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+        {/* Left Side - Schedule a Meeting Content (order-1 on all, order-1 on mobile, order-1 on desktop) */}
+        <div className="text-center lg:text-left order-1">
+          <div className="flex items-center justify-center lg:justify-start mb-4 lg:mb-6">
+            <Calendar className="w-8 h-8 lg:w-10 lg:h-10 text-[var(--accent-green)] mr-3 lg:mr-4" />
+            <h3 className="text-2xl lg:text-3xl font-semibold gradient-text">Schedule a Meeting</h3>
           </div>
           
-          <p className="text-[var(--text-secondary)] mb-8 leading-relaxed text-lg">
+          <p className="text-[var(--text-secondary)] mb-6 lg:mb-8 leading-relaxed text-base lg:text-lg">
             {CALENDLY_CONFIG.DESCRIPTION}
           </p>
           
-          <div className="space-y-4">
-            <div className="flex items-center justify-center md:justify-start space-x-3 text-[var(--text-secondary)] text-lg">
-              <Clock className="w-5 h-5 text-[var(--accent-green)]" />
+          <div className="space-y-3 lg:space-y-4">
+            <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 text-[var(--text-secondary)] text-sm lg:text-lg">
+              <Clock className="w-4 h-4 lg:w-5 lg:h-5 text-[var(--accent-green)]" />
               <span>{CALENDLY_CONFIG.CONSULTATION_DURATION}</span>
             </div>
-            <div className="flex items-center justify-center md:justify-start space-x-3 text-[var(--text-secondary)] text-lg">
-              <Calendar className="w-5 h-5 text-[var(--accent-green)]" />
+            <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 text-[var(--text-secondary)] text-sm lg:text-lg">
+              <Calendar className="w-4 h-4 lg:w-5 lg:h-5 text-[var(--accent-green)]" />
               <span>Flexible scheduling</span>
             </div>
           </div>
         </div>
 
-        {/* Right Side - Calendly Widget */}
-        <div className="flex justify-center md:justify-end">
+        {/* Right Side - Calendly Widget (order-2 on all, order-2 on mobile, order-2 on desktop) */}
+        <div className="flex justify-center lg:justify-end order-2">
           <div 
-            className="calendly-inline-widget"
+            className="calendly-inline-widget w-full lg:max-w-[500px]"
             data-url={darkThemeUrl}
-            style={{ minWidth: '400px', height: '600px', width: '100%', maxWidth: '500px' }}
+            style={{ 
+              minWidth: '280px', 
+              height: '400px', 
+              width: '100%'
+            }}
           />
         </div>
       </div>
