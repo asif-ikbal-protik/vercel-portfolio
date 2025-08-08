@@ -129,6 +129,7 @@ const Portfolio = () => {
       title: "Project Delivery Manager",
       company: "Appalux Global IT",
       duration: "April 2024 - Present",
+      website: "https://www.appalux.com",
       description: "Leads AI workflow automation, internal tooling, and MVP development initiatives. Specializes in architecting and delivering modular, scalable automation systems using n8n, Make.com, Python-based microservices, and LLM orchestration. Drives cross-functional delivery execution, CI/CD alignment, and infrastructure-level fault tolerance across internal product lines.",
       achievements: ["Architected scalable automation systems", "Integrated LLMs & Python microservices", "Led cross-functional delivery", "Ensured CI/CD alignment & fault tolerance"]
     },
@@ -136,6 +137,7 @@ const Portfolio = () => {
       title: "Associate Delivery Lead", 
       company: "Quantigo AΙ",
       duration: "December 2023 - April 2024",
+      website: "https://www.quantigo.ai",
       description: "Oversaw comprehensive management of data annotation projects, integrating client collaboration, technical coordination, team training, and quality assurance.",
       achievements: ["Led client engagement", "Built classification schemas", "Supported engineering partners", "Trained teams & enforced QC"]
     },
@@ -143,6 +145,7 @@ const Portfolio = () => {
       title: "Associate",
       company: "Quantanite",
       duration: "January 2023 - December 2023", 
+      website: "https://www.quantanite.com",
       description: "Executed client assignments with precision, fostering collaboration to enhance task quality and deliver consistently high standards.",
       achievements: ["Supervised operational output", "Contributed to task accuracy", "Ensured efficiency", "Exceeded client expectations"]
     },
@@ -150,6 +153,7 @@ const Portfolio = () => {
       title: "Data Annotator",
       company: "Bengali AI",
       duration: "August 2022 – January 2023",
+      website: "https://www.bengali.ai",
       description: "Contributed to the Document Layout Analysis Project by producing high-precision annotations to support the digitization of Bengali language documents. Applied judgment in annotation decisions and utilized level box tools for structural accuracy.",
       achievements: ["Produced high-precision annotations", "Supported Bengali document digitization", "Utilized level box tools for accuracy"]
     }
@@ -455,8 +459,20 @@ const Portfolio = () => {
                       <h3 className="text-xl font-semibold gradient-text">{exp.title}</h3>
                       <p className="text-[var(--text-secondary)]">{exp.company}</p>
                     </div>
-                    <div className="text-[var(--accent-blue)] font-mono text-sm">
-                      {exp.duration}
+                    <div className="flex flex-col items-start md:items-end gap-1">
+                      {exp.website && (
+                        <a
+                          href={exp.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[var(--accent-blue)] font-mono text-sm hover:underline"
+                        >
+                          {`@${exp.website}`.replace(/^@https?:\/\//, "")}
+                        </a>
+                      )}
+                      <div className="text-[var(--accent-blue)] font-mono text-sm">
+                        {exp.duration}
+                      </div>
                     </div>
                   </div>
                   <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
