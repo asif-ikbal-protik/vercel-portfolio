@@ -1,46 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { CheckCircle } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
-interface Skill {
+interface SkillBarProps {
   name: string;
-  level: number;
+  percentage: number;
+  icon: LucideIcon;
   color: string;
-  icon?: React.ComponentType<any>;
 }
 
-interface AnimatedSkillBarProps {
-  skill: Skill;
-  delay?: number;
-}
-
-const AnimatedSkillBar: React.FC<AnimatedSkillBarProps> = ({ skill, delay = 0 }) => {
+const AnimatedSkillBar: React.FC<SkillBarProps> = ({ name, percentage, icon: Icon, color }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [animatedPercentage, setAnimatedPercentage] = useState(0);
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            setIsVisible(true);
-            // Animate progress
-            const duration = 2000;
-            const startTime = Date.now();
-            
-            const animate = () => {
-              const elapsed = Date.now() - startTime;
-              const currentProgress = Math.min((elapsed / duration) * skill.level, skill.level);
-              
-              setProgress(currentProgress);
-              
-              if (elapsed < duration) {
-                requestAnimationFrame(animate);
-              }
-            };
-            
-            requestAnimationFrame(animate);
-          }, delay);
+          setIsVisible(true);
+          // Animate the percentage
+          let start = 0;
+          const increment = percentage / 50; // 50 steps for smooth animation
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= percentage) {
+              setAnimatedPercentage(percentage);
+              clearInterval(timer);
+            } else {
+              setAnimatedPercentage(start);
+            }
+          }, 20);
         }
       },
       { threshold: 0.5 }
@@ -51,35 +40,26 @@ const AnimatedSkillBar: React.FC<AnimatedSkillBarProps> = ({ skill, delay = 0 })
     }
 
     return () => observer.disconnect();
-  }, [skill.level, delay]);
+  }, [percentage]);
 
   return (
-    <div ref={barRef} className="modern-card glow-blue animate-fade-in">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          {skill.icon && <skill.icon className="w-5 h-5 text-[var(--accent-blue)]" />}
-          <h3 className="text-lg font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
-        </div>
+    <div ref={barRef} className="mb-6">
+      <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
-          <span className="text-sm text-[var(--text-secondary)]">{Math.round(progress)}%</span>
-          {progress >= skill.level && (
-            <CheckCircle className="w-4 h-4 text-green-500 animate-pulse" />
-          )}
+          <Icon className="w-5 h-5" style={{ color }} />
+          <span className="font-medium text-[var(--text-primary)]">{name}</span>
         </div>
+        <span className="text-sm text-[var(--text-secondary)]">{Math.round(animatedPercentage)}%</span>
       </div>
-      
-      <div className="relative h-3 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+      <div className="w-full bg-[var(--bg-tertiary)] rounded-full h-2 overflow-hidden">
         <div
-          className={`h-full rounded-full transition-all duration-1000 ease-out ${
-            isVisible ? 'animate-pulse' : ''
-          }`}
+          className="h-full rounded-full transition-all duration-1000 ease-out"
           style={{
-            width: `${progress}%`,
-            background: skill.color,
-            boxShadow: isVisible ? `0 0 10px ${skill.color}40` : 'none',
+            width: `${animatedPercentage}%`,
+            background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
+            boxShadow: `0 0 10px ${color}40`
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse" />
       </div>
     </div>
   );
