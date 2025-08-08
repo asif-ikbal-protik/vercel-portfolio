@@ -258,53 +258,51 @@ const Portfolio = () => {
       />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--bg-primary)]/95 backdrop-blur-md border-b border-[var(--border-color)]">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-xl font-bold gradient-text font-mono">Asif Ikbal</div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-8">
-              {navItems.map(item => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`nav-link ${
-                    activeSection === item.id ? 'active' : ''
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
+      <nav className="fixed top-4 left-0 right-0 z-50">
+        <div className="container mx-auto px-4">
+          <div className="glass-nav mx-auto max-w-5xl rounded-2xl border border-[var(--border-color)]/60 bg-[var(--bg-primary)]/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+            <div className="flex items-center justify-between px-4 py-3">
+              <div className="text-xl font-bold gradient-text font-mono">Asif Ikbal</div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-[var(--hover-color)] transition-colors"
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--bg-primary)] border-b border-[var(--border-color)] p-4">
-              <div className="flex flex-col space-y-2">
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center space-x-2">
                 {navItems.map(item => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`nav-link text-left ${
-                      activeSection === item.id ? 'active' : ''
-                    }`}
+                    className={`nav-link rounded-xl ${activeSection === item.id ? 'active' : ''}`}
                   >
                     {item.label}
                   </button>
                 ))}
               </div>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden p-2 rounded-xl hover:bg-[var(--hover-color)] transition-colors"
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
             </div>
-          )}
+
+            {/* Mobile Menu */}
+            {isMenuOpen && (
+              <div className="md:hidden border-t border-[var(--border-color)]/60 px-2 py-2">
+                <div className="flex flex-col space-y-1">
+                  {navItems.map(item => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className={`nav-link rounded-lg text-left ${activeSection === item.id ? 'active' : ''}`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
