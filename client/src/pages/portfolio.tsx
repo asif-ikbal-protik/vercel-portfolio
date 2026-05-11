@@ -9,34 +9,29 @@ import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import CalendlyWidget from '@/components/CalendlyWidget';
 import { CALENDLY_CONFIG } from '@/config/calendly';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Download, 
-  Github, 
-  Linkedin, 
-  Menu, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Download,
+  Github,
+  Linkedin,
+  Menu,
   X,
   Brain,
   Code,
-  Cog,
-  Cloud,
-  Trophy,
-  Star,
-  Award,
   CheckCircle,
   Send,
   Box,
   MessageSquare,
-  Bot,
   Globe,
   Shield,
   GraduationCap,
-  Tag,
+  Award,
   Zap,
   Target,
-  Database
+  Database,
+  Film
 } from 'lucide-react';
 
 const Portfolio = () => {
@@ -84,10 +79,10 @@ const Portfolio = () => {
   });
 
   const phrases = [
-    "Project Delivery Manager",
-    "SFT & RLHF Specialist", 
-    "QA & QC Lead",
-    "MLOps Integration Expert"
+    "Technical Project Manager",
+    "AI Operations Specialist",
+    "Agile Delivery Lead",
+    "Workflow Optimization Expert"
   ];
 
   const navItems = [
@@ -97,65 +92,66 @@ const Portfolio = () => {
     { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
     { id: 'education', label: 'Education' },
+    { id: 'certifications', label: 'Certifications' },
     { id: 'contact', label: 'Contact' }
   ];
 
   const skills = [
-    { 
-      name: "AI/ML Expertise", 
-      icon: Brain, 
-      items: ["Prompt Engineering", "LLM Integration", "RLHF", "Computer Vision", "Multimodal AI", "Model Evaluation"] 
+    {
+      name: "Project Management",
+      icon: Target,
+      items: ["Agile & Scrum", "Sprint Planning", "Jira Tracking", "Stakeholder Management", "Risk Management", "Cross-functional Teams"]
     },
-    { 
-      name: "Data Operations", 
-      icon: Database, 
-      items: ["Dataset Curation", "Annotation Workflows", "Label Studio, V7, CVAT", "QA/QC Pipelines", "Schema Design", "COCO, JSON, YOLO Formats"] 
+    {
+      name: "AI Operations",
+      icon: Database,
+      items: ["Workflow Optimization", "Annotation Workflows", "QA/QC Pipelines", "SOP Development", "SLA/KPI Monitoring", "Team Training"]
     },
-    { 
-      name: "MLOps & Infrastructure", 
-      icon: Cloud, 
-      items: ["Docker, Kubernetes", "CI/CD (GitHub, GitLab CI)", "Cloud Storage (S3, GCS)", "Workflow Orchestration", "Monitoring & Logging"] 
+    {
+      name: "Process Automation",
+      icon: Zap,
+      items: ["n8n", "Retool", "Looker Studio", "Dashboard Reporting", "Workflow Automations", "Basic Web Development"]
     },
-    { 
-      name: "Tooling & Automation", 
-      icon: Code, 
-      items: ["Python, JavaScript", "n8n, Make.com", "FastAPI, Node.js", "PostgreSQL, Redis", "ClickUp, Confluence"] 
+    {
+      name: "Tools & Platforms",
+      icon: Code,
+      items: ["Jira, Notion, Slack", "Postman, GitHub", "Canva, Adobe After Effects", "Google Workspace", "Lucidchart"]
     }
   ];
-  
+
 
   const experiences = [
     {
-      title: "Project Delivery Manager",
+      title: "Technical Project Manager",
       company: "Appalux Global IT",
-      duration: "April 2024 - Present",
-      website: "https://www.appalux.com",
-      description: "Leads AI workflow automation, internal tooling, and MVP development initiatives. Specializes in architecting and delivering modular, scalable automation systems using n8n, Make.com, Python-based microservices, and LLM orchestration. Drives cross-functional delivery execution, CI/CD alignment, and infrastructure-level fault tolerance across internal product lines.",
-      achievements: ["Architected scalable automation systems", "Integrated LLMs & Python microservices", "Led cross-functional delivery", "Ensured CI/CD alignment & fault tolerance"]
+      duration: "Apr 2025 - Present",
+      website: "",
+      description: "Managed end-to-end delivery operations across AI-based projects using Agile methodologies. Coordinated cross-functional teams (creative, engineering, QA, operations). Led AI data annotation workflows for 70+ members, improving operational accuracy from 82% to 97%. Built automations using n8n and dashboards using Retool and Looker Studio.",
+      achievements: ["Agile & Sprint Execution", "Improved accuracy to 97%", "Built n8n automations", "Developed SOPs & training"]
     },
     {
-      title: "Associate Delivery Lead", 
-      company: "Quantigo AΙ",
-      duration: "December 2023 - April 2024",
-      website: "https://www.quantigo.ai",
-      description: "Oversaw comprehensive management of data annotation projects, integrating client collaboration, technical coordination, team training, and quality assurance.",
-      achievements: ["Led client engagement", "Built classification schemas", "Supported engineering partners", "Trained teams & enforced QC"]
+      title: "Associate Delivery Lead",
+      company: "Quantigo AI",
+      duration: "Dec 2023 - Apr 2025",
+      website: "",
+      description: "Managed project coordination and sprint execution across multiple AI-focused delivery teams within a Scrum environment. Coordinated with engineering, operations, and QA. Monitored KPIs, SLA adherence, and operational metrics while identifying workflow bottlenecks.",
+      achievements: ["Scrum Sprint Execution", "KPI & SLA Monitoring", "Workflow Optimization", "Cross-functional Coordination"]
     },
     {
-      title: "Associate",
+      title: "Project Associate",
       company: "Quantanite",
-      duration: "January 2023 - December 2023", 
-      website: "https://www.quantanite.com",
-      description: "Executed client assignments with precision, fostering collaboration to enhance task quality and deliver consistently high standards.",
-      achievements: ["Supervised operational output", "Contributed to task accuracy", "Ensured efficiency", "Exceeded client expectations"]
+      duration: "Aug 2022 - Dec 2023",
+      website: "",
+      description: "Supported service delivery operations including workflow coordination, reporting, quality monitoring, and task management. Assisted in SLA compliance tracking, operational issue resolution, and prepared operational reports for management.",
+      achievements: ["SLA Compliance Tracking", "Operational Reporting", "Process Improvements", "Workflow Coordination"]
     },
     {
-      title: "Data Annotator",
+      title: "Data Operations Associate",
       company: "Bengali AI",
-      duration: "August 2022 – January 2023",
-      website: "https://www.bengali.ai",
-      description: "Contributed to the Document Layout Analysis Project by producing high-precision annotations to support the digitization of Bengali language documents. Applied judgment in annotation decisions and utilized level box tools for structural accuracy.",
-      achievements: ["Produced high-precision annotations", "Supported Bengali document digitization", "Utilized level box tools for accuracy"]
+      duration: "Aug 2021 - Jan 2023",
+      website: "",
+      description: "Supported AI data operations and annotation workflows while ensuring adherence to project guidelines and quality standards. Collaborated with cross-functional teams to maintain data quality and resolved operational and data-related issues.",
+      achievements: ["Data Validation", "Quality Assurance", "Issue Resolution", "Workflow Tracking"]
     }
   ];
 
@@ -190,7 +186,7 @@ const Portfolio = () => {
   useEffect(() => {
     const currentPhraseText = phrases[currentPhrase];
     const typingSpeed = isDeleting ? 50 : 100;
-    
+
     const timer = setTimeout(() => {
       if (!isDeleting && currentChar < currentPhraseText.length) {
         setTypedText(currentPhraseText.slice(0, currentChar + 1));
@@ -317,19 +313,19 @@ const Portfolio = () => {
             <div className="w-32 h-32 mx-auto mb-8 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center animate-float">
               <Brain className="w-12 h-12 text-[var(--accent-blue)] animate-pulse-slow" />
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text animate-gradient">
               Asif Ikbal
             </h1>
-            
+
             <div className="text-xl md:text-2xl text-[var(--text-secondary)] mb-8 min-h-[2rem]">
               <span className="typing-cursor font-mono">{typedText}</span>
             </div>
-            
+
             <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed">
-            Project Delivery Manager with a CSE background, focused on AI workflow automation, Gen AI, and computer vision. Expert in deploying LLM-integrated systems using n8n, Make.com, and Python microservices. Experienced in MVP development, fault-tolerant architectures, and managing large-scale SFT, RLHF, and HITL data ops. Skilled in schema design, QA systems, and end-to-end delivery of modular AI solutions.
+              Technical Project Manager with 4+ years of experience leading AI-driven, digital, and operational projects. Experienced in Agile and Scrum methodologies, stakeholder communication, and cross-functional execution. Skilled in managing teams while improving workflows, delivery consistency, and operational performance through process automation and reporting dashboards.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <button
                 onClick={() => scrollToSection('contact')}
@@ -338,9 +334,9 @@ const Portfolio = () => {
                 <Mail className="w-5 h-5" />
                 Hire Me
               </button>
-              
+
               <a
-                href="/Asif_Ikbal_Resume.pdf"
+                href="/Asif_IKbal.pdf"
                 download
                 className="px-8 py-4 border-2 border-[var(--accent-blue)] text-[var(--accent-blue)] font-semibold hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300 rounded-xl backdrop-blur-sm flex items-center justify-center gap-2"
               >
@@ -359,15 +355,15 @@ const Portfolio = () => {
             <h2 className="section-title animate-fade-in-up">
               About Me
             </h2>
-            
+
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="modern-card glow-blue animate-slide-in">
-                <h3 className="text-2xl font-semibold mb-4 gradient-text">Operational Precision</h3>
+                <h3 className="text-2xl font-semibold mb-4 gradient-text">Agile & AI Operations</h3>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  Proven track record in SFT, RLHF, and HITL operations. Adept in designing workflows, QA pipelines, and annotation schemas aligned with MLOps ecosystems.
+                  Extensive background in AI operations, sprint planning, Jira tracking, and cross-functional team coordination. Strong focus on SLA/KPI monitoring and SOP development.
                 </p>
                 <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  My focus is on delivering operational precision, cross-functional collaboration, and measurable model performance uplift.
+                  I specialize in improving operational accuracy, resolving bottlenecks, and automating workflows to deliver consistent and scalable results in fast-paced environments.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center space-x-2">
@@ -384,24 +380,24 @@ const Portfolio = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="space-y-6">
                 <div className="modern-card glow-purple animate-fade-in">
                   <h4 className="text-xl font-semibold mb-3 gradient-text">Core Expertise</h4>
                   <ul className="space-y-2 text-[var(--text-secondary)]">
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />LLM-integrated automation workflows</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Scalable data annotation & curation pipelines</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />QA/QC protocol design</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />MLOps and CI/CD orchestrationn</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Toolchain design using n8n, Make.com, Python services</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Cross-functional collaboration</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Agile & Scrum Methodologies</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />AI Data Operations & Annotation</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />SOP Development & Team Training</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Dashboard Reporting (Retool, Looker)</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Process Automation (n8n)</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Cross-functional Collaboration</li>
                   </ul>
                 </div>
-                
+
                 <div className="modern-card glow-cyan animate-fade-in">
-                  <h4 className="text-xl font-semibold mb-3 gradient-text">Automation & Workflow Tools</h4>
+                  <h4 className="text-xl font-semibold mb-3 gradient-text">Tools & Platforms</h4>
                   <div className="flex flex-wrap gap-2">
-                    {["n8n", "Make.com", "Python Microservices", "FastAPI", "GitHub Actions", "ClickUp", "Notion"].map(format => (
+                    {["Jira", "Notion", "Retool", "Looker Studio", "n8n", "Canva", "After Effects"].map(format => (
                       <Badge key={format} variant="secondary" className="bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]">
                         {format}
                       </Badge>
@@ -421,7 +417,7 @@ const Portfolio = () => {
             <h2 className="section-title animate-fade-in-up">
               Technical Skills
             </h2>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {skills.map((skill, index) => (
                 <div key={skill.name} className="modern-card glow-gradient animate-fade-in">
@@ -450,7 +446,7 @@ const Portfolio = () => {
             <h2 className="section-title animate-fade-in-up">
               Experience
             </h2>
-            
+
             <div className="space-y-8">
               {experiences.map((exp, index) => (
                 <div key={index} className="modern-card glow-blue animate-slide-in">
@@ -499,7 +495,42 @@ const Portfolio = () => {
             <h2 className="section-title animate-fade-in-up">
               Featured Projects
             </h2>
-            
+
+            {/* Featured Creative Project */}
+            <div className="mb-8 max-w-2xl mx-auto modern-card glow-gradient animate-fade-in">
+              <div className="flex items-center mb-3">
+                <Film className="w-5 h-5 text-[var(--accent-blue)] mr-2" />
+                <h3 className="text-lg font-semibold gradient-text">Appalux Global IT (aartic ai) — Company Promo</h3>
+              </div>
+              <p className="text-[var(--text-secondary)] mb-4 leading-relaxed text-sm">
+                Motion graphics promotional video created using Adobe After Effects to showcase the company's services, culture, and brand identity.
+              </p>
+              <a
+                href="https://drive.google.com/file/d/17fKDvPru01mdZlFB6ABH9WJUYAys42A6/view"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block w-full rounded-lg overflow-hidden border border-[var(--border-color)]/40 hover:border-[var(--accent-blue)]/60 transition-all duration-300"
+              >
+                <img
+                  src="/appalux_promo_thumb.png"
+                  alt="Appalux Global IT Promo Video"
+                  className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-[var(--accent-blue)]/80 group-hover:bg-[var(--accent-blue)] flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg shadow-[var(--accent-blue)]/30">
+                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+              </a>
+              <div className="flex flex-wrap gap-2 mt-3">
+                {["Adobe After Effects", "Motion Graphics", "Creative Production", "Brand Identity"].map((tech, idx) => (
+                  <Badge key={idx} variant="secondary" className="bg-[var(--accent-purple)]/20 text-[var(--accent-purple)] text-xs">
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {projects.map((project, index) => (
                 <div key={index} className="modern-card glow-purple animate-fade-in">
@@ -531,7 +562,7 @@ const Portfolio = () => {
             <h2 className="section-title animate-fade-in-up">
               Education
             </h2>
-            
+
             <div className="modern-card glow-cyan animate-fade-in text-center">
               <div className="flex items-center justify-center mb-4">
                 <GraduationCap className="w-8 h-8 text-[var(--accent-blue)] mr-3" />
@@ -548,6 +579,35 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Certifications Section */}
+      <section id="certifications" className="section bg-[var(--bg-secondary)]/50 relative z-10">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="section-title animate-fade-in-up">
+              Certifications
+            </h2>
+
+            <div className="space-y-4">
+              {[
+                { name: "Project Management", issuer: "Coursera", year: "2024" },
+                { name: "Generative AI for Project Management", issuer: "PMI", year: "2024" },
+                { name: "Web Development Course", issuer: "SoftTech IT", year: "2020" }
+              ].map((cert, index) => (
+                <div key={index} className="modern-card glow-gradient animate-fade-in flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Award className="w-6 h-6 text-[var(--accent-blue)]" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-[var(--text-primary)]">{cert.name}</h3>
+                    <p className="text-[var(--text-secondary)] text-sm">{cert.issuer} • {cert.year}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="section bg-[var(--bg-secondary)]/50 relative z-10">
         <div className="container mx-auto px-6">
@@ -557,8 +617,8 @@ const Portfolio = () => {
             </h2>
 
             {/* Calendly Widget */}
-            <CalendlyWidget 
-              calendlyUrl={CALENDLY_CONFIG.CALENDLY_URL} 
+            <CalendlyWidget
+              calendlyUrl={CALENDLY_CONFIG.CALENDLY_URL}
               className="w-full"
             />
 
@@ -567,7 +627,7 @@ const Portfolio = () => {
               <div className="animate-slide-in">
                 <h3 className="text-2xl font-semibold mb-6 gradient-text">Let's Work Together</h3>
                 <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
-                  I'm always interested in discussing new opportunities in AI data annotation, 
+                  I'm always interested in discussing new opportunities in AI data annotation,
                   MLOps, and quality assurance. Let's connect and explore how we can collaborate.
                 </p>
                 <div className="space-y-4">
@@ -621,70 +681,70 @@ const Portfolio = () => {
 
               {/* Contact Form */}
               <div className="contact-form animate-fade-in">
-              <form onSubmit={handleContactSubmit} className="space-y-6">
-                <div>
-                  <Label htmlFor="name" className="text-[var(--text-primary)] font-medium">Name</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    className="form-input mt-2"
-                    value={contactForm.name}
-                    onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email" className="text-[var(--text-primary)] font-medium">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    className="form-input mt-2"
-                    value={contactForm.email}
-                    onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="subject" className="text-[var(--text-primary)] font-medium">Subject</Label>
-                  <Input
-                    id="subject"
-                    type="text"
-                    className="form-input mt-2"
-                    value={contactForm.subject}
-                    onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="message" className="text-[var(--text-primary)] font-medium">Message</Label>
-                  <Textarea
-                    id="message"
-                    rows={4}
-                    className="form-input mt-2"
-                    value={contactForm.message}
-                    onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={contactMutation.isPending}
-                  className="modern-button w-full py-3 font-semibold text-lg flex items-center justify-center gap-2"
-                >
-                  {contactMutation.isPending ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      Send Message
-                    </>
-                  )}
-                </Button>
-              </form>
-            </div>
+                <form onSubmit={handleContactSubmit} className="space-y-6">
+                  <div>
+                    <Label htmlFor="name" className="text-[var(--text-primary)] font-medium">Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      className="form-input mt-2"
+                      value={contactForm.name}
+                      onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email" className="text-[var(--text-primary)] font-medium">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      className="form-input mt-2"
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="subject" className="text-[var(--text-primary)] font-medium">Subject</Label>
+                    <Input
+                      id="subject"
+                      type="text"
+                      className="form-input mt-2"
+                      value={contactForm.subject}
+                      onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="message" className="text-[var(--text-primary)] font-medium">Message</Label>
+                    <Textarea
+                      id="message"
+                      rows={4}
+                      className="form-input mt-2"
+                      value={contactForm.message}
+                      onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    disabled={contactMutation.isPending}
+                    className="modern-button w-full py-3 font-semibold text-lg flex items-center justify-center gap-2"
+                  >
+                    {contactMutation.isPending ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
