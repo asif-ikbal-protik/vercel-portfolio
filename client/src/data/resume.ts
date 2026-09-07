@@ -336,7 +336,7 @@ export const managedProjects = [
       "Python",
       "REST APIs"
     ],
-    "image": "/images/projects/Health & Wellness SaaS Platform _ React + Python + REST APIs.png",
+    "image": "/images/projects/health-wellness-saas-platform.png",
     "role": "Project Manager"
   },
   {
@@ -348,7 +348,7 @@ export const managedProjects = [
       "APIs",
       "Tool Use"
     ],
-    "image": "/images/projects/AI Agent for Business Operations _ LLM + APIs + Tool Use.png",
+    "image": "/images/projects/ai-agent-for-business-operations.png",
     "role": "Project Manager"
   },
   {
@@ -360,7 +360,7 @@ export const managedProjects = [
       "Claude",
       "APIs"
     ],
-    "image": "/images/projects/AI Sales Workflow Automation _ n8n + Claude + APIs.png",
+    "image": "/images/projects/ai-sales-workflow-automation.png",
     "role": "Project Manager"
   },
   {
@@ -372,7 +372,7 @@ export const managedProjects = [
       "OpenAI",
       "Vector Search"
     ],
-    "image": "/images/projects/RAG Knowledge Assistant _ Python + OpenAI + Vector Search.png",
+    "image": "/images/projects/rag-knowledge-assistant.png",
     "role": "Project Manager"
   },
   {
@@ -383,7 +383,7 @@ export const managedProjects = [
       "OpenAI",
       "React"
     ],
-    "image": "/images/projects/AI-Powered Assistant Platform _ OpenAI + React.png",
+    "image": "/images/projects/ai-powered-assistant-platform.png",
     "role": "Project Manager"
   },
   {
@@ -394,7 +394,7 @@ export const managedProjects = [
       "Python FastAPI",
       "PostgreSQL"
     ],
-    "image": "/images/projects/SaaS Backend & API Platform _ Python FastAPI + PostgreSQL.png",
+    "image": "/images/projects/saas-backend-api-platform.png",
     "role": "Project Manager"
   },
   {
@@ -405,7 +405,7 @@ export const managedProjects = [
       "Figma",
       "Responsive Design System"
     ],
-    "image": "/images/projects/SaaS Product UX_UI _ Figma + Responsive Design System.png",
+    "image": "/images/projects/saas-product-ux-ui.png",
     "role": "Project Manager"
   }
 ];

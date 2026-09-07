@@ -592,13 +592,13 @@ const Portfolio = () => {
               <Reveal key={project.name} delay={(i % 2) * 0.06}>
                 <article className="managed-project-card flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-card">
                   <a
-                    href={encodeURI(project.image)}
+                    href={project.image}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View full-size image of ${project.name}`}
                     className="managed-project-image group relative block overflow-hidden"
                   >
-                    <img src={encodeURI(project.image)} alt={`${project.name} · project interface`} width="1000" height="750" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
+                    <img src={project.image} alt={`${project.name} · project interface`} width="1000" height="750" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
                     <span className="absolute bottom-4 right-4 rounded-full border border-white/20 bg-black/80 px-3 py-2 text-xs text-white backdrop-blur">View project image ↗</span>
                   </a>
                   <div className="flex flex-1 flex-col p-6 md:p-8">
