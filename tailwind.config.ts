@@ -51,6 +51,18 @@ export default {
           "4": "var(--chart-4)",
           "5": "var(--chart-5)",
         },
+        black: {
+          DEFAULT: "#000",
+          100: "#000319",
+          200: "rgba(17, 25, 40, 0.75)",
+          300: "rgba(255, 255, 255, 0.125)",
+        },
+        white: {
+          DEFAULT: "#FFF",
+          100: "#BEC1DD",
+          200: "#C1C2D3",
+        },
+        purple: "#CBACF9",
         sidebar: {
           DEFAULT: "var(--sidebar-background)",
           foreground: "var(--sidebar-foreground)",
@@ -106,6 +118,22 @@ export default {
             boxShadow: "0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.1)",
           },
         },
+        spotlight: {
+          "0%": { opacity: "0", transform: "translate(-72%, -62%) scale(0.5)" },
+          "100%": { opacity: "1", transform: "translate(-50%, -40%) scale(1)" },
+        },
+        shimmer: {
+          from: { backgroundPosition: "0 0" },
+          to: { backgroundPosition: "-200% 0" },
+        },
+        scroll: {
+          to: { transform: "translate(calc(-50% - 0.5rem))" },
+        },
+        moveHorizontal: {
+          "0%": { transform: "translateX(-50%) translateY(-10%)" },
+          "50%": { transform: "translateX(50%) translateY(10%)" },
+          "100%": { transform: "translateX(-50%) translateY(-10%)" },
+        },
         "border-glow": {
           "0%, 100%": {
             borderColor: "rgba(59, 130, 246, 0.3)",
@@ -121,6 +149,10 @@ export default {
         "glow-pulse": "glow-pulse 3s ease-in-out infinite",
         "glow-gradient": "glow-gradient 4s ease-in-out infinite",
         "border-glow": "border-glow 3s ease-in-out infinite",
+        spotlight: "spotlight 2s ease .75s 1 forwards",
+        shimmer: "shimmer 2s linear infinite",
+        scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        "move-horizontal": "moveHorizontal 20s ease infinite",
       },
     },
   },

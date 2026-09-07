@@ -2,12 +2,13 @@
 export const CALENDLY_CONFIG = {
   // Your actual Calendly URL
   CALENDLY_URL: "https://calendly.com/asifikbalprotik/30min",
-  
+
   // Consultation duration
-  CONSULTATION_DURATION: "30-minute consultation",
-  
+  CONSULTATION_DURATION: "30 minutes",
+
   // Description
-  DESCRIPTION: "Let's discuss your AI/ML projects, automation needs, or data annotation requirements. Book a convenient time for a consultation."
+  DESCRIPTION:
+    "A working session on the product decision in front of you: the problem behind the request, what the data says, and what the first phase should cost.",
 };
 
-export default CALENDLY_CONFIG; 
+export default CALENDLY_CONFIG;

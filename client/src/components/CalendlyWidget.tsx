@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, Globe } from 'lucide-react';
 import { CALENDLY_CONFIG } from '@/config/calendly';
 
 interface CalendlyWidgetProps {
@@ -9,60 +9,68 @@ interface CalendlyWidgetProps {
 
 const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className = '' }) => {
   useEffect(() => {
-    // Load Calendly script
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
     script.async = true;
     document.body.appendChild(script);
 
     return () => {
-      // Cleanup script when component unmounts
-      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
+      const existingScript = document.querySelector(
+        'script[src="https://assets.calendly.com/assets/external/widget.js"]',
+      );
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
     };
   }, []);
 
-  // Add dark theme parameter to Calendly URL
-  const darkThemeUrl = `${calendlyUrl}?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=22c55e`;
+  // Dark embed so the iframe matches the surrounding panel.
+  const themedUrl = `${calendlyUrl}?hide_gdpr_banner=1&hide_landing_page_details=1&background_color=10132e&text_color=ffffff&primary_color=cbacf9`;
 
   return (
-    <div className={`modern-card glow-green animate-fade-in ${className}`}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
-        {/* Left Side - Schedule a Meeting Content (order-1 on all, order-1 on mobile, order-1 on desktop) */}
-        <div className="text-center lg:text-left order-1">
-          <div className="flex items-center justify-center lg:justify-start mb-4 lg:mb-6">
-            <Calendar className="w-8 h-8 lg:w-10 lg:h-10 text-[var(--accent-green)] mr-3 lg:mr-4" />
-            <h3 className="text-2xl lg:text-3xl font-semibold gradient-text">Schedule a Meeting</h3>
-          </div>
-          
-          <p className="text-[var(--text-secondary)] mb-6 lg:mb-8 leading-relaxed text-base lg:text-lg">
+    <div
+      className={`relative overflow-hidden rounded-3xl border border-white/[0.12] p-6 md:p-10 ${className}`}
+      style={{ background: 'linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)' }}
+    >
+      <div className="aurora right-[-8%] top-[-30%] h-64 w-64 bg-purple" />
+
+      <div className="relative grid gap-8 md:grid-cols-12 md:gap-12">
+        <div className="md:col-span-4">
+          <p className="eyebrow">Direct booking</p>
+          <h3 className="mt-4 font-display text-2xl font-semibold text-white">
+            Book the first call
+          </h3>
+          <p className="mt-4 text-sm leading-relaxed text-white-200">
             {CALENDLY_CONFIG.DESCRIPTION}
           </p>
-          
-          <div className="space-y-3 lg:space-y-4">
-            <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 text-[var(--text-secondary)] text-sm lg:text-lg">
-              <Clock className="w-4 h-4 lg:w-5 lg:h-5 text-[var(--accent-green)]" />
-              <span>{CALENDLY_CONFIG.CONSULTATION_DURATION}</span>
-            </div>
-            <div className="flex items-center justify-center lg:justify-start space-x-2 lg:space-x-3 text-[var(--text-secondary)] text-sm lg:text-lg">
-              <Calendar className="w-4 h-4 lg:w-5 lg:h-5 text-[var(--accent-green)]" />
-              <span>Flexible scheduling</span>
-            </div>
-          </div>
+          <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex text-sm font-medium text-lilac underline underline-offset-4">Open booking in a new tab ↗</a>
+
+          <dl className="mt-7 space-y-3 border-t border-white/10 pt-5">
+            {[
+              { icon: <Clock className="h-4 w-4" />, k: 'Length', v: CALENDLY_CONFIG.CONSULTATION_DURATION },
+              { icon: <Calendar className="h-4 w-4" />, k: 'Format', v: 'Video call, agenda sent ahead' },
+              { icon: <Globe className="h-4 w-4" />, k: 'Timezone', v: 'GMT+6 · flexible for US & EU' },
+            ].map((row) => (
+              <div key={row.k} className="flex items-center gap-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-lilac">
+                  {row.icon}
+                </span>
+                <div>
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-white-200/60">
+                    {row.k}
+                  </dt>
+                  <dd className="text-sm text-white-200">{row.v}</dd>
+                </div>
+              </div>
+            ))}
+          </dl>
         </div>
 
-        {/* Right Side - Calendly Widget (order-2 on all, order-2 on mobile, order-2 on desktop) */}
-        <div className="flex justify-center lg:justify-end order-2">
-          <div 
-            className="calendly-inline-widget w-full lg:max-w-[500px]"
-            data-url={darkThemeUrl}
-            style={{ 
-              minWidth: '280px', 
-              height: '400px', 
-              width: '100%'
-            }}
+        <div className="md:col-span-8">
+          <div
+            className="calendly-inline-widget w-full"
+            data-url={themedUrl}
+            style={{ minWidth: '280px', height: '520px', width: '100%' }}
           />
         </div>
       </div>
@@ -70,4 +78,4 @@ const CalendlyWidget: React.FC<CalendlyWidgetProps> = ({ calendlyUrl, className 
   );
 };
 
-export default CalendlyWidget; 
+export default CalendlyWidget;

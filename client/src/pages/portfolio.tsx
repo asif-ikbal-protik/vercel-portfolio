@@ -1,553 +1,760 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
+import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import CalendlyWidget from '@/components/CalendlyWidget';
 import { CALENDLY_CONFIG } from '@/config/calendly';
+
+import Spotlight from '@/components/aceternity/Spotlight';
+import MagicButton from '@/components/aceternity/MagicButton';
+import FloatingNav from '@/components/aceternity/FloatingNav';
+import TextGenerate from '@/components/aceternity/TextGenerate';
+import TiltCard from '@/components/aceternity/TiltCard';
+import DottedGlobe from '@/components/aceternity/DottedGlobe';
+import { BentoGrid, BentoGridItem } from '@/components/aceternity/BentoGrid';
+import ApproachCard from '@/components/aceternity/ApproachCard';
+import MovingBorderCard from '@/components/aceternity/MovingBorderCard';
+
 import {
-  Mail,
-  Phone,
-  MapPin,
+  ArrowRight,
   Download,
-  Github,
+  Home,
+  User,
+  Workflow,
+  Briefcase,
+  Mail,
+  Play,
+  MapPin,
+  Phone,
   Linkedin,
-  Menu,
-  X,
-  Brain,
-  Code,
-  CheckCircle,
-  Send,
-  Box,
-  MessageSquare,
-  Globe,
-  Shield,
+  Github,
   GraduationCap,
   Award,
-  Zap,
-  Target,
-  Database,
-  Film
+  Plus,
+  Minus,
+  Send,
 } from 'lucide-react';
 
+import {
+  profile,
+  summary,
+  pullQuote,
+  metrics,
+  method,
+  capabilities,
+  toolkit,
+  experience,
+  featuredWork,
+  managedProjects,
+  engagements,
+  education,
+  certifications,
+  bentoItems,
+  deliveryHighlights,
+  clientStrip,
+} from '@/data/resume';
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const NAV = [
+  { id: 'home', label: 'Home', icon: <Home className="h-4 w-4" /> },
+  { id: 'about', label: 'About', icon: <User className="h-4 w-4" /> },
+  { id: 'method', label: 'Method', icon: <Workflow className="h-4 w-4" /> },
+  { id: 'work', label: 'Work', icon: <Briefcase className="h-4 w-4" /> },
+  { id: 'contact', label: 'Contact', icon: <Mail className="h-4 w-4" /> },
+];
+
+/** Dot-matrix colour + ground for each method card's reveal. */
+const METHOD_VISUALS = [
+  { colors: [[110, 231, 183], [52, 211, 153]], gradient: 'bg-emerald-950' },
+  { colors: [[125, 211, 252], [56, 189, 248]], gradient: 'bg-sky-950' },
+  { colors: [[244, 114, 182], [232, 121, 249]], gradient: 'bg-black' },
+  { colors: [[196, 181, 253], [203, 172, 249]], gradient: 'bg-indigo-950' },
+  { colors: [[253, 224, 71], [251, 191, 36]], gradient: 'bg-amber-950' },
+  { colors: [[103, 232, 249], [34, 211, 238]], gradient: 'bg-cyan-950' },
+];
+
+const PROJECT_GROUPS = [
+  { title: 'AI & automation', categories: ['AI & business operations', 'Sales automation', 'Knowledge & retrieval', 'AI assistant experience'] },
+  { title: 'SaaS platforms & product design', categories: ['Health & wellness', 'Platform & infrastructure', 'Responsive product design'] },
+];
+
+const ProjectManagerBadge = () => (
+  <span className="inline-flex w-fit shrink-0 rounded-full border border-purple/25 bg-purple/10 px-3 py-1 text-xs font-medium text-lilac">Project Manager</span>
+);
+
+const SECTION_IDS = [
+  'home',
+  'about',
+  'method',
+  'capabilities',
+  'experience',
+  'work',
+  'impact',
+  'credentials',
+  'contact',
+];
+
+/* ------------------------------------------------------------------ */
+/* Shared bits                                                         */
+/* ------------------------------------------------------------------ */
+
+const Reveal: React.FC<{
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}> = ({ children, delay = 0, className }) => (
+  <motion.div
+    className={className}
+    initial={{ opacity: 0, y: 26 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-70px' }}
+    transition={{ duration: 0.7, delay, ease }}
+  >
+    {children}
+  </motion.div>
+);
+
+const SectionHeading: React.FC<{
+  lead: string;
+  highlight: string;
+  eyebrow?: string;
+}> = ({ lead, highlight, eyebrow }) => (
+  <Reveal className="mb-12 text-center md:mb-16">
+    {eyebrow && <p className="eyebrow mb-4">{eyebrow}</p>}
+    <h2 className="display-section">
+      {lead} <span className="text-lilac">{highlight}</span>
+    </h2>
+  </Reveal>
+);
+
+/* ------------------------------------------------------------------ */
+/* Page                                                                */
+/* ------------------------------------------------------------------ */
+
 const Portfolio = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [currentChar, setCurrentChar] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typedText, setTypedText] = useState('');
+  const [openRole, setOpenRole] = useState<number | null>(0);
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
+
   const { toast } = useToast();
 
   const contactMutation = useMutation({
-    mutationFn: async (formData: typeof contactForm) => {
-      return await apiRequest('POST', '/api/contact', formData);
-    },
+    mutationFn: async (formData: typeof contactForm) =>
+      apiRequest('POST', '/api/contact', formData),
     onSuccess: () => {
       toast({
-        title: "Message Sent!",
-        description: "Thank you for your message! I will get back to you soon.",
+        title: 'Message sent',
+        description: 'Thanks for reaching out. I will reply shortly.',
       });
       setContactForm({ name: '', email: '', subject: '', message: '' });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
+        title: 'Something went wrong',
+        description: 'The message did not send. Please try again or email me directly.',
+        variant: 'destructive',
       });
     },
   });
 
   const trackViewMutation = useMutation({
-    mutationFn: async () => {
-      return await apiRequest('POST', '/api/portfolio-view', {});
-    },
-    onError: (error) => {
-      console.warn('Portfolio view tracking failed:', error);
-    },
+    mutationFn: async () => apiRequest('POST', '/api/portfolio-view', {}),
+    onError: (error) => console.warn('Portfolio view tracking failed:', error),
   });
 
-  const phrases = [
-    "Technical Project Manager",
-    "AI Operations Specialist",
-    "Agile Delivery Lead",
-    "Workflow Optimization Expert"
-  ];
-
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'education', label: 'Education' },
-    { id: 'certifications', label: 'Certifications' },
-    { id: 'contact', label: 'Contact' }
-  ];
-
-  const skills = [
-    {
-      name: "Project Management",
-      icon: Target,
-      items: ["Agile & Scrum", "Sprint Planning", "Jira Tracking", "Stakeholder Management", "Risk Management", "Cross-functional Teams"]
-    },
-    {
-      name: "AI Operations",
-      icon: Database,
-      items: ["Workflow Optimization", "Annotation Workflows", "QA/QC Pipelines", "SOP Development", "SLA/KPI Monitoring", "Team Training"]
-    },
-    {
-      name: "Process Automation",
-      icon: Zap,
-      items: ["n8n", "Retool", "Looker Studio", "Dashboard Reporting", "Workflow Automations", "Basic Web Development"]
-    },
-    {
-      name: "Tools & Platforms",
-      icon: Code,
-      items: ["Jira, Notion, Slack", "Postman, GitHub", "Canva, Adobe After Effects", "Google Workspace", "Lucidchart"]
-    }
-  ];
-
-
-  const experiences = [
-    {
-      title: "Technical Project Manager",
-      company: "Appalux Global IT",
-      duration: "Apr 2025 - Present",
-      website: "",
-      description: "Managed end-to-end delivery operations across AI-based projects using Agile methodologies. Coordinated cross-functional teams (creative, engineering, QA, operations). Led AI data annotation workflows for 70+ members, improving operational accuracy from 82% to 97%. Built automations using n8n and dashboards using Retool and Looker Studio.",
-      achievements: ["Agile & Sprint Execution", "Improved accuracy to 97%", "Built n8n automations", "Developed SOPs & training"]
-    },
-    {
-      title: "Associate Delivery Lead",
-      company: "Quantigo AI",
-      duration: "Dec 2023 - Apr 2025",
-      website: "",
-      description: "Managed project coordination and sprint execution across multiple AI-focused delivery teams within a Scrum environment. Coordinated with engineering, operations, and QA. Monitored KPIs, SLA adherence, and operational metrics while identifying workflow bottlenecks.",
-      achievements: ["Scrum Sprint Execution", "KPI & SLA Monitoring", "Workflow Optimization", "Cross-functional Coordination"]
-    },
-    {
-      title: "Project Associate",
-      company: "Quantanite",
-      duration: "Aug 2022 - Dec 2023",
-      website: "",
-      description: "Supported service delivery operations including workflow coordination, reporting, quality monitoring, and task management. Assisted in SLA compliance tracking, operational issue resolution, and prepared operational reports for management.",
-      achievements: ["SLA Compliance Tracking", "Operational Reporting", "Process Improvements", "Workflow Coordination"]
-    },
-    {
-      title: "Data Operations Associate",
-      company: "Bengali AI",
-      duration: "Aug 2021 - Jan 2023",
-      website: "",
-      description: "Supported AI data operations and annotation workflows while ensuring adherence to project guidelines and quality standards. Collaborated with cross-functional teams to maintain data quality and resolved operational and data-related issues.",
-      achievements: ["Data Validation", "Quality Assurance", "Issue Resolution", "Workflow Tracking"]
-    }
-  ];
-
-  const projects = [
-    {
-      title: "3D Point Cloud Segmentation",
-      description: "Advanced annotation project for autonomous navigation systems with complex 3D segmentation.",
-      tech: ["Computer Vision", "3D Segmentation", "Autonomous Systems"],
-      icon: Box
-    },
-    {
-      title: "RLHF for Chatbot Optimization",
-      description: "Large-scale Reinforcement Learning with Human Feedback project for improving chatbot responses.",
-      tech: ["NLP", "RLHF", "Human Feedback"],
-      icon: MessageSquare
-    },
-    {
-      title: "Defect Detection for Aerial Vehicles",
-      description: "Annotation pipeline for an aerial vehicle defect detection system, ensuring high accuracy for critical safety applications.",
-      tech: ["Computer Vision", "Quality Assurance", "Defect Detection"],
-      icon: Shield
-    },
-    {
-      title: "Multimodal Sentiment Classification",
-      description: "A project for classifying sentiment and intent from multimodal data within the banking sector.",
-      tech: ["Multimodal AI", "NLP", "Banking Sector"],
-      icon: Globe
-    }
-  ];
-
-  // Typing animation effect
-  useEffect(() => {
-    const currentPhraseText = phrases[currentPhrase];
-    const typingSpeed = isDeleting ? 50 : 100;
-
-    const timer = setTimeout(() => {
-      if (!isDeleting && currentChar < currentPhraseText.length) {
-        setTypedText(currentPhraseText.slice(0, currentChar + 1));
-        setCurrentChar(currentChar + 1);
-      } else if (isDeleting && currentChar > 0) {
-        setTypedText(currentPhraseText.slice(0, currentChar - 1));
-        setCurrentChar(currentChar - 1);
-      } else if (!isDeleting && currentChar === currentPhraseText.length) {
-        setTimeout(() => setIsDeleting(true), 1000);
-      } else if (isDeleting && currentChar === 0) {
-        setIsDeleting(false);
-        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
-      }
-    }, typingSpeed);
-
-    return () => clearTimeout(timer);
-  }, [currentChar, isDeleting, currentPhrase, phrases]);
-
-  // Track portfolio view on load
   useEffect(() => {
     trackViewMutation.mutate();
   }, []);
 
-  // Active section tracking
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+    );
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id);
-          break;
-        }
-      }
-    };
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => observer.disconnect();
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
-  };
+  const goTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     contactMutation.mutate(contactForm);
   };
 
+  /* ---------------------------------------------------------------- */
+  /* Bento tile content                                               */
+  /* ---------------------------------------------------------------- */
+
+  const bentoExtras: Record<string, React.ReactNode> = {
+    discovery: null,
+    toolkit: (
+      <div className="toolkit-columns column-mask flex gap-3 overflow-hidden">
+        {[0, 1].map((col) => {
+          const tools = toolkit.flatMap((g) => g.tools).filter((_, i) => i % 2 === col);
+          return (
+            <div key={col} className="flex-1 overflow-hidden">
+              <div className={col === 0 ? 'chip-column' : 'chip-column-reverse'}>
+                {[0, 1].map((copy) => (
+                  <div key={copy} className="flex flex-col items-center gap-2.5 pb-2.5">
+                    {tools.map((tool) => (
+                      <span
+                        key={`${copy}-${tool}`}
+                        className="w-full rounded-lg border border-white/[0.1] bg-white/[0.05] py-2 text-center text-xs text-white-200"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ),
+    metrics: (
+      <div className="flex flex-wrap gap-2">
+        {['Funnels', 'Retention', 'Cohorts', 'Activation', 'Unit economics'].map((chip) => (
+          <span key={chip} className="chip">
+            {chip}
+          </span>
+        ))}
+      </div>
+    ),
+    current: (
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="chip chip-lilac">
+          n8n automation
+        </span>
+        <span className="chip">Figma Make prototypes</span>
+        <span className="chip">Looker Studio reporting</span>
+      </div>
+    ),
+  };
+
+  const bentoVisuals: Record<string, React.ReactNode> = {
+    discovery: <img src="/images/discovery-research.png" alt="" className="collaboration-art" loading="lazy" />,
+    globe: (
+      <div className="timezone-globe">
+        <DottedGlobe className="h-full w-full" />
+      </div>
+    ),
+    metrics: <div className="aurora bottom-[-40%] left-[-20%] h-56 w-56 bg-indigo-500" />,
+    current: (
+      <>
+        <div className="aurora left-[35%] top-[-60%] h-72 w-72 bg-purple" />
+        <div className="dot-bg absolute inset-0 opacity-50" />
+        <svg
+          viewBox="0 0 320 140"
+          className="absolute -bottom-4 right-4 hidden h-36 w-80 opacity-70 md:block"
+          aria-hidden="true"
+        >
+          <g stroke="rgba(203,172,249,0.5)" strokeWidth="1.2" fill="none">
+            <path d="M40 70 H110" />
+            <path d="M150 70 H210" />
+            <path d="M250 70 H285" />
+            <path d="M130 50 V30 H210" />
+            <path d="M130 90 V110 H210" />
+          </g>
+          {[
+            [40, 70],
+            [130, 70],
+            [230, 30],
+            [230, 70],
+            [230, 110],
+            [290, 70],
+          ].map(([cx, cy]) => (
+            <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="7" fill="#0b0f2b" stroke="#cbacf9" strokeWidth="1.2" />
+          ))}
+          <circle cx="40" cy="70" r="3" fill="#cbacf9">
+            <animate attributeName="cx" values="40;130;230;290" dur="4s" repeatCount="indefinite" />
+          </circle>
+        </svg>
+      </>
+    ),
+    contact: (
+      <>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#5b21b6] via-[#7c3aed] to-[#a21caf]" />
+        <div className="dot-bg absolute inset-0 opacity-40" />
+      </>
+    ),
+    toolkit: null,
+  };
+
   return (
-    <div className="min-h-screen w-full bg-black relative text-[var(--text-primary)]">
-      {/* Black Basic Grid Background */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background: "#000000",
-          backgroundImage: `
-            linear-gradient(to right, rgba(75, 85, 99, 0.4) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(75, 85, 99, 0.4) 1px, transparent 1px)
-          `,
-          backgroundSize: "40px 40px",
-        }}
+    <MotionConfig reducedMotion="user">
+    <main className="relative w-full overflow-x-hidden bg-black-100 text-white">
+      <a className="skip-link" href="#about">Skip to content</a>
+      <FloatingNav
+        navItems={NAV}
+        activeId={activeSection}
+        onNavigate={goTo}
+        action={
+          <a
+            href={profile.resume}
+            download
+            aria-label="Download CV"
+            className="ml-1 flex items-center gap-1.5 rounded-lg border border-white/15 px-2.5 py-1 text-xs text-white-200 transition-colors hover:border-purple/60 hover:text-white"
+          >
+            <Download className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">CV</span>
+          </a>
+        }
       />
 
-      {/* Navigation */}
-      <nav className="fixed top-4 left-0 right-0 z-50">
-        <div className="container mx-auto px-4">
-          <div className="glass-nav mx-auto max-w-5xl rounded-2xl border border-[var(--border-color)]/60 bg-[var(--bg-primary)]/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
-            <div className="flex items-center justify-between px-4 py-3">
-              <div className="text-xl font-bold gradient-text font-mono">Asif Ikbal</div>
-
-              {/* Desktop Menu */}
-              <div className="hidden md:flex items-center space-x-2">
-                {navItems.map(item => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className={`nav-link rounded-xl ${activeSection === item.id ? 'active' : ''}`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 rounded-xl hover:bg-[var(--hover-color)] transition-colors"
-              >
-                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-
-            {/* Mobile Menu */}
-            {isMenuOpen && (
-              <div className="md:hidden border-t border-[var(--border-color)]/60 px-2 py-2">
-                <div className="flex flex-col space-y-1">
-                  {navItems.map(item => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`nav-link rounded-lg text-left ${activeSection === item.id ? 'active' : ''}`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+      {/* ============================================================ HERO */}
+      <section
+        id="home"
+        className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-16 pt-32"
+      >
+        <div className="absolute inset-0">
+          <Spotlight className="-left-10 -top-40 md:-left-32 md:-top-20" fill="white" />
+          <Spotlight className="left-full top-10 h-[80vh] w-[50vw]" fill="#cbacf9" />
+          <Spotlight className="left-80 top-28 h-[80vh] w-[50vw]" fill="#7c3aed" />
         </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative z-10">
-        <div className="container mx-auto px-6 text-center">
-          <div className="max-w-4xl mx-auto animate-fade-in-up">
-            <div className="w-32 h-32 mx-auto mb-8 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center animate-float">
-              <Brain className="w-12 h-12 text-[var(--accent-blue)] animate-pulse-slow" />
-            </div>
+        <div className="grid-bg absolute inset-0" />
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text animate-gradient">
-              Asif Ikbal
-            </h1>
-
-            <div className="text-xl md:text-2xl text-[var(--text-secondary)] mb-8 min-h-[2rem]">
-              <span className="typing-cursor font-mono">{typedText}</span>
-            </div>
-
-            <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed">
-              Technical Project Manager with 4+ years of experience leading AI-driven, digital, and operational projects. Experienced in Agile and Scrum methodologies, stakeholder communication, and cross-functional execution. Skilled in managing teams while improving workflows, delivery consistency, and operational performance through process automation and reporting dashboards.
+        <div className="hero-layout relative z-10 mx-auto w-full max-w-[1400px] px-[var(--gutter)]">
+          <div className="hero-copy">
+            <p className="eyebrow mb-6 flex items-center gap-3"><span className="availability-dot" />{profile.available}</p>
+            <p className="mb-4 text-base font-medium text-white-200">{profile.name} <span className="mx-2 text-white/25">/</span> {profile.role}</p>
+            <TextGenerate
+              words="Better questions. Clearer decisions. Stronger delivery."
+              highlightRange={[2, 3]}
+              className="display-hero max-w-3xl"
+            />
+            <p className="mt-7 max-w-xl text-base leading-relaxed text-white-200 md:text-lg">
+              I find the problem behind the request, then turn evidence into a plan your team can deliver. Discovery, strategy, and delivery for web, SaaS, and AI products.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="modern-button px-8 py-4 font-semibold text-lg flex items-center justify-center gap-2"
-              >
-                <Mail className="w-5 h-5" />
-                Hire Me
-              </button>
-
-              <a
-                href="/Asif_IKbal.pdf"
-                download
-                className="px-8 py-4 border-2 border-[var(--accent-blue)] text-[var(--accent-blue)] font-semibold hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300 rounded-xl backdrop-blur-sm flex items-center justify-center gap-2"
-              >
-                <Download className="w-5 h-5" />
-                Download Resume
-              </a>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <MagicButton title="Explore my work" icon={<ArrowRight className="h-4 w-4" />} handleClick={() => goTo('work')} />
+              <a href={profile.resume} download className="ghost-button"><Download className="h-4 w-4" />Download CV</a>
             </div>
+            <p className="mt-6 flex items-center gap-2 text-sm text-white-200/80"><MapPin className="h-4 w-4 text-lilac" />Dhaka, Bangladesh · Working across time zones</p>
+          </div>
+          <div className="hero-art" aria-hidden="true">
+            <img src="/images/discovery-orbit.png" alt="" width="1536" height="1024" fetchPriority="high" />
+            <div className="hero-art-caption"><span className="font-mono text-xs text-lilac">01 / CLARITY FROM COMPLEXITY</span><span className="mt-2 block text-sm text-white-200">Discover the signal. Shape what comes next.</span></div>
+          </div>
+          <div className="hero-metrics">
+            {metrics.map((m) => (
+              <div key={m.label} className="px-4 py-6 md:px-7">
+                <p className="font-display text-3xl font-semibold tracking-tight text-white">{m.value}</p>
+                <p className="mt-2 text-sm text-white-200">{m.label}</p>
+                <p className="mt-1 text-xs text-white-200/60">{m.note}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="section relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              About Me
-            </h2>
+      {/* =========================================================== ABOUT */}
+      <section id="about" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <SectionHeading eyebrow="01 · About" lead="A partner from" highlight="question to delivery" />
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="modern-card glow-blue animate-slide-in">
-                <h3 className="text-2xl font-semibold mb-4 gradient-text">Agile & AI Operations</h3>
-                <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  Extensive background in AI operations, sprint planning, Jira tracking, and cross-functional team coordination. Strong focus on SLA/KPI monitoring and SOP development.
-                </p>
-                <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-                  I specialize in improving operational accuracy, resolving bottlenecks, and automating workflows to deliver consistent and scalable results in fast-paced environments.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-[var(--accent-blue)]" />
-                    <span className="text-[var(--text-secondary)]">Dhaka, Bangladesh</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Phone className="w-4 h-4 text-[var(--accent-blue)]" />
-                    <span className="text-[var(--text-secondary)]">+8801878044854</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Mail className="w-4 h-4 text-[var(--accent-blue)]" />
-                    <span className="text-[var(--text-secondary)]">asifikbalprotik@gmail.com</span>
-                  </div>
-                </div>
+          <BentoGrid className="reference-bento">
+            {bentoItems.map((item, i) => (
+              <Reveal key={item.id} delay={i * 0.06} className={item.className}>
+                <BentoGridItem
+                  className={`h-full ${item.variant === 'globe' ? 'timezone-card' : ''} ${item.variant === 'discovery' ? 'discovery-card' : ''} ${item.variant === 'toolkit' ? 'toolkit-card' : ''}`}
+                  title={item.title}
+                  description={item.eyebrow}
+                  visual={bentoVisuals[item.variant]}
+                  copyEmail={item.variant === 'contact' ? profile.email : undefined}
+                >
+                  {bentoExtras[item.variant]}
+                </BentoGridItem>
+              </Reveal>
+            ))}
+          </BentoGrid>
+
+          {/* Long-form summary */}
+          <div className="mt-16 grid gap-8 md:mt-20 md:grid-cols-12">
+            <Reveal className="md:col-span-7">
+              <div className="space-y-5 text-sm leading-relaxed text-white-200 md:text-base">
+                {summary.map((para) => (
+                  <p key={para.slice(0, 24)}>{para}</p>
+                ))}
               </div>
+            </Reveal>
 
-              <div className="space-y-6">
-                <div className="modern-card glow-purple animate-fade-in">
-                  <h4 className="text-xl font-semibold mb-3 gradient-text">Core Expertise</h4>
-                  <ul className="space-y-2 text-[var(--text-secondary)]">
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Agile & Scrum Methodologies</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />AI Data Operations & Annotation</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />SOP Development & Team Training</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Dashboard Reporting (Retool, Looker)</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Process Automation (n8n)</li>
-                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-[var(--accent-blue)] mr-2" />Cross-functional Collaboration</li>
+            <Reveal delay={0.1} className="md:col-span-5">
+              <div className="glass-panel top-hairline relative p-7">
+                <p className="font-display text-lg font-semibold leading-snug text-white md:text-xl">
+                  “{pullQuote}”
+                </p>
+                <p className="eyebrow mt-5">On writing recommendations</p>
+
+                <dl className="mt-7 space-y-3 border-t border-white/10 pt-5">
+                  {[
+                    ['Reports to', 'Founders & senior stakeholders'],
+                    ['Works with', 'Engineering, QA, UX, operations'],
+                    ['Languages', profile.languages],
+                  ].map(([k, v]) => (
+                    <div key={k} className="flex justify-between gap-4 text-sm">
+                      <dt className="text-white-200/70">{k}</dt>
+                      <dd className="text-right text-white-200">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================== METHOD */}
+      <section id="method" className="relative py-20 md:py-28">
+        <div className="dot-bg absolute inset-0 opacity-40" />
+        <div className="relative mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <SectionHeading
+            eyebrow="02 · Method"
+            lead="My approach to"
+            highlight="every engagement"
+          />
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {method.map((m, i) => (
+              <Reveal key={m.step} delay={i * 0.06}>
+                <ApproachCard
+                  phase={`${m.step} · ${m.title}`}
+                  title={m.title}
+                  body={m.body}
+                  colors={METHOD_VISUALS[i % METHOD_VISUALS.length].colors}
+                  gradient={METHOD_VISUALS[i % METHOD_VISUALS.length].gradient}
+                />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================================================== CAPABILITIES */}
+      <section id="capabilities" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <SectionHeading
+            eyebrow="03 · Capabilities"
+            lead="What I am"
+            highlight="accountable for"
+          />
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {capabilities.map((c, i) => (
+              <Reveal key={c.id} delay={i * 0.06}>
+                <div className="glass-panel top-hairline relative h-full p-6">
+                  <div className="mb-5 flex items-baseline justify-between">
+                    <h3 className="font-display text-xl font-semibold text-white">{c.title}</h3>
+                    <span className="font-mono text-xs text-lilac">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <ul className="space-y-2.5">
+                    {c.items.map((item) => (
+                      <li key={item} className="flex gap-2.5 text-sm text-white-200">
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-purple" />
+                        {item}
+                      </li>
+                    ))}
                   </ul>
                 </div>
-
-                <div className="modern-card glow-cyan animate-fade-in">
-                  <h4 className="text-xl font-semibold mb-3 gradient-text">Tools & Platforms</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {["Jira", "Notion", "Retool", "Looker Studio", "n8n", "Canva", "After Effects"].map(format => (
-                      <Badge key={format} variant="secondary" className="bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]">
-                        {format}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="section bg-[var(--bg-secondary)]/50 relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Technical Skills
-            </h2>
+      {/* ====================================================== EXPERIENCE */}
+      <section id="experience" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-[1200px] px-[var(--gutter)]">
+          <SectionHeading eyebrow="04 · Experience" lead="Where I have" highlight="delivered" />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {skills.map((skill, index) => (
-                <div key={skill.name} className="modern-card glow-gradient animate-fade-in">
-                  <div className="flex items-center mb-4">
-                    <skill.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
-                    <h3 className="text-xl font-semibold text-[var(--accent-blue)]">{skill.name}</h3>
-                  </div>
-                  <div className="space-y-2">
-                    {skill.items.map((item, idx) => (
-                      <div key={idx} className="text-[var(--text-secondary)] text-sm">
-                        • {item}
+          <div className="space-y-5">
+            {experience.map((role, i) => {
+              const open = openRole === i;
+              return (
+                <Reveal key={role.company} delay={i * 0.05}>
+                  <MovingBorderCard duration={open ? 14 : 9}>
+                  <article className="overflow-hidden rounded-3xl">
+                    <button
+                      onClick={() => setOpenRole(open ? null : i)}
+                      className="flex w-full items-start gap-5 p-6 text-left md:gap-7 md:p-8"
+                      aria-expanded={open}
+                    >
+                      <span className="mt-1 hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] font-display text-lg font-bold text-lilac md:flex">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <h3 className="font-display text-xl font-semibold text-white md:text-2xl">
+                            {role.title}
+                          </h3>
+                          {role.current && <span className="chip chip-lilac">Current</span>}
+                        </div>
+                        <p className="mt-1 text-sm text-white-200">
+                          {role.company} · {role.period}
+                        </p>
+                        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white-200/85">
+                          {role.summary}
+                        </p>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Experience Section */}
-      <section id="experience" className="section relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Experience
-            </h2>
+                      <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 text-white-200">
+                        {open ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                      </span>
+                    </button>
 
-            <div className="space-y-8">
-              {experiences.map((exp, index) => (
-                <div key={index} className="modern-card glow-blue animate-slide-in">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-semibold gradient-text">{exp.title}</h3>
-                      <p className="text-[var(--text-secondary)]">{exp.company}</p>
-                    </div>
-                    <div className="flex flex-col items-start md:items-end gap-1">
-                      {exp.website && (
-                        <a
-                          href={exp.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[var(--accent-blue)] font-mono text-sm hover:underline"
+                    <AnimatePresence initial={false}>
+                      {open && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.45, ease }}
+                          className="overflow-hidden"
                         >
-                          {`@${exp.website}`.replace(/^@https?:\/\//, "")}
-                        </a>
+                          <div className="grid gap-8 px-6 pb-8 md:grid-cols-12 md:px-8 md:pl-[6.25rem]">
+                            <ol className="space-y-3 md:col-span-8">
+                              {role.bullets.map((b, bi) => (
+                                <li key={bi} className="flex gap-3 text-sm leading-relaxed">
+                                  <span className="mt-0.5 font-mono text-[11px] text-lilac">
+                                    {String(bi + 1).padStart(2, '0')}
+                                  </span>
+                                  <span className="text-white-200">{b}</span>
+                                </li>
+                              ))}
+                            </ol>
+
+                            <div className="md:col-span-4">
+                              <p className="eyebrow mb-3">Focus</p>
+                              <div className="flex flex-wrap gap-2">
+                                {role.tags.map((t) => (
+                                  <span key={t} className="chip">
+                                    {t}
+                                  </span>
+                                ))}
+                              </div>
+                              <p className="mt-5 flex items-center gap-2 text-xs text-white-200/70">
+                                <MapPin className="h-3.5 w-3.5" />
+                                {role.location}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
                       )}
-                      <div className="text-[var(--accent-blue)] font-mono text-sm">
-                        {exp.duration}
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
-                    {exp.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.achievements.map((achievement, idx) => (
-                      <Badge key={idx} variant="secondary" className="bg-[var(--accent-purple)]/20 text-[var(--accent-purple)]">
-                        {achievement}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+                    </AnimatePresence>
+                  </article>
+                  </MovingBorderCard>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="section bg-[var(--bg-secondary)]/50 relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Featured Projects
-            </h2>
+      {/* ============================================================ WORK */}
+      <section id="work" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <SectionHeading
+            eyebrow="05 · Work"
+            lead="Selected projects"
+            highlight="I managed"
+          />
 
-            {/* Featured Creative Project */}
-            <div className="mb-8 max-w-2xl mx-auto modern-card glow-gradient animate-fade-in">
-              <div className="flex items-center mb-3">
-                <Film className="w-5 h-5 text-[var(--accent-blue)] mr-2" />
-                <h3 className="text-lg font-semibold gradient-text">Appalux Global IT (aartic ai) — Company Promo</h3>
-              </div>
-              <p className="text-[var(--text-secondary)] mb-4 leading-relaxed text-sm">
-                Motion graphics promotional video created using Adobe After Effects to showcase the company's services, culture, and brand identity.
-              </p>
+          <p className="mx-auto -mt-5 mb-12 max-w-2xl text-center text-base leading-relaxed text-white-200">
+            Project management across AI, SaaS, automation, and digital product experiences.
+          </p>
+          {PROJECT_GROUPS.map((group) => (
+          <div key={group.title} className="mb-20">
+            <h3 className="mb-7 font-display text-2xl font-semibold text-white">{group.title}</h3>
+            <div className="grid gap-7 md:grid-cols-2">
+            {managedProjects.filter((project) => group.categories.includes(project.category)).map((project, i) => (
+              <Reveal key={project.name} delay={(i % 2) * 0.06}>
+                <article className="managed-project-card flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-card">
+                  <a
+                    href={encodeURI(project.image)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View full-size image of ${project.name}`}
+                    className="managed-project-image group relative block overflow-hidden"
+                  >
+                    <img src={encodeURI(project.image)} alt={`${project.name} · project interface`} width="1000" height="750" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-contain" />
+                    <span className="absolute bottom-4 right-4 rounded-full border border-white/20 bg-black/80 px-3 py-2 text-xs text-white backdrop-blur">View project image ↗</span>
+                  </a>
+                  <div className="flex flex-1 flex-col p-6 md:p-8">
+                    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                      <span className="text-xs font-medium uppercase tracking-[0.12em] text-white-200">{project.category}</span>
+                      <ProjectManagerBadge />
+                    </div>
+                    <h3 className="font-display text-xl font-semibold leading-snug text-white md:text-2xl">{project.name}</h3>
+                    <p className="mt-4 text-base leading-relaxed text-white-200">{project.description}</p>
+                    <div className="mt-auto flex flex-wrap gap-2 pt-6">
+                      {project.technologies.map((technology) => <span key={technology} className="chip">{technology}</span>)}
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+            </div>
+          </div>
+          ))}
+
+          <h3 className="mb-7 font-display text-2xl font-semibold text-white">Creative work</h3>
+          {/* Featured film */}
+          <Reveal>
+            <TiltCard className="mb-14" amount={5}>
               <a
-                href="https://drive.google.com/file/d/17fKDvPru01mdZlFB6ABH9WJUYAys42A6/view"
+                href={featuredWork.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative block w-full rounded-lg overflow-hidden border border-[var(--border-color)]/40 hover:border-[var(--accent-blue)]/60 transition-all duration-300"
+                className="group grid overflow-hidden rounded-3xl border border-white/[0.12] md:grid-cols-12"
+                style={{
+                  background: 'linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)',
+                }}
               >
-                <img
-                  src="/appalux_promo_thumb.png"
-                  alt="Appalux Global IT Promo Video"
-                  className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-[var(--accent-blue)]/80 group-hover:bg-[var(--accent-blue)] flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg shadow-[var(--accent-blue)]/30">
-                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                  </div>
+                <div className="relative overflow-hidden md:col-span-7">
+                  <img
+                    src={featuredWork.thumb}
+                    alt={featuredWork.title}
+                    loading="lazy"
+                    width="1536"
+                    height="1024"
+                    className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  />
+                  <span className="absolute bottom-5 left-5 flex items-center gap-2 rounded-full border border-white/25 bg-black/60 px-4 py-2 text-xs font-medium text-white backdrop-blur transition-colors duration-300 group-hover:border-purple group-hover:bg-purple group-hover:text-black-100">
+                    <Play className="h-3 w-3 fill-current" />
+                    Play film
+                  </span>
                 </div>
-              </a>
-              <div className="flex flex-wrap gap-2 mt-3">
-                {["Adobe After Effects", "Motion Graphics", "Creative Production", "Brand Identity"].map((tech, idx) => (
-                  <Badge key={idx} variant="secondary" className="bg-[var(--accent-purple)]/20 text-[var(--accent-purple)] text-xs">
-                    {tech}
-                  </Badge>
-                ))}
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <div key={index} className="modern-card glow-purple animate-fade-in">
-                  <div className="flex items-center mb-4">
-                    <project.icon className="w-6 h-6 text-[var(--accent-blue)] mr-3" />
-                    <h3 className="text-xl font-semibold gradient-text">{project.title}</h3>
+                <div className="flex flex-col justify-center p-7 md:col-span-5 md:p-10">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="eyebrow">{featuredWork.kind}</p>
+                    <ProjectManagerBadge />
                   </div>
-                  <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
-                    {project.description}
+                  <h3 className="mt-4 font-display text-2xl font-semibold text-white">
+                    {featuredWork.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-white-200">
+                    {featuredWork.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, idx) => (
-                      <Badge key={idx} variant="secondary" className="bg-[var(--accent-blue)]/20 text-[var(--accent-blue)]">
-                        {tech}
-                      </Badge>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {featuredWork.tags.map((t) => (
+                      <span key={t} className="chip">
+                        {t}
+                      </span>
                     ))}
                   </div>
+                  <span className="mt-8 flex items-center gap-2 text-sm font-medium text-lilac">
+                    Watch the film
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </a>
+            </TiltCard>
+          </Reveal>
+
+          <h3 className="mb-7 font-display text-2xl font-semibold text-white">AI data & delivery programmes</h3>
+          {/* Delivery programmes */}
+          <div className="grid gap-6 md:grid-cols-2">
+            {engagements.map((p, i) => (
+              <Reveal key={p.index} delay={i * 0.06}>
+                <div className="h-full">
+                  <div
+                    className="work-card relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/[0.12]"
+                    style={{
+                      background:
+                        'linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)',
+                    }}
+                  >
+                    <div className="work-card-image">
+                      <img
+                        src={p.image}
+                        alt={p.imageAlt}
+                        width="1536"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span className="work-card-image-label">Concept illustration</span>
+                    </div>
+                    <div className="relative flex flex-1 flex-col p-7 md:p-9">
+                      <div className="mb-4"><ProjectManagerBadge /></div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-purple/40 bg-purple/10 font-display text-sm font-bold text-lilac">
+                          {p.index}
+                        </span>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white-200/80">
+                          {p.sector}
+                        </p>
+                      </div>
+
+                      <h3 className="mt-5 font-display text-xl font-semibold text-white md:text-2xl">
+                        {p.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-white-200">
+                        {p.description}
+                      </p>
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {p.tags.map((t) => (
+                          <span key={t} className="chip">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Experience grounded in the documented career history. */}
+      <section id="impact" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <SectionHeading eyebrow="06 · Experience in practice" lead="The work behind" highlight="the numbers" />
+          <div className="grid gap-5 md:grid-cols-3">
+            {deliveryHighlights.map((item, i) => (
+              <Reveal key={item.title} delay={i * 0.06}>
+                <article className="impact-card h-full">
+                  <span className="font-mono text-xs text-lilac">0{i + 1} / {item.category}</span>
+                  <p className="mt-8 font-display text-4xl font-semibold tracking-tight text-white">{item.value}</p>
+                  <h3 className="mt-3 text-lg font-semibold text-white">{item.title}</h3>
+                  <p className="mt-4 text-base leading-relaxed text-white-200">{item.description}</p>
+                  <p className="mt-7 border-t border-white/10 pt-4 text-sm text-white-200/70">{item.context}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-14 border-y border-white/10 py-8">
+            <p className="eyebrow mb-7 text-center">Experience across these teams</p>
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+              {clientStrip.map((c) => (
+                <div key={c.name} className="text-center">
+                  <p className="font-display text-base font-semibold text-white md:text-lg">{c.name}</p>
+                  <p className="mt-2 text-xs text-white-200/70">{c.note}</p>
                 </div>
               ))}
             </div>
@@ -555,210 +762,266 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Education Section */}
-      <section id="education" className="section relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Education
-            </h2>
+      {/* ===================================================== CREDENTIALS */}
+      <section id="credentials" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <SectionHeading
+            eyebrow="07 · Credentials"
+            lead="Education &"
+            highlight="certification"
+          />
 
-            <div className="modern-card glow-cyan animate-fade-in text-center">
-              <div className="flex items-center justify-center mb-4">
-                <GraduationCap className="w-8 h-8 text-[var(--accent-blue)] mr-3" />
-                <h3 className="text-2xl font-semibold gradient-text">B.Sc. in Computer Science & Engineering</h3>
-              </div>
-              <p className="text-[var(--text-secondary)] text-lg mb-2">
-                Bangladesh University of Business Technology, Dhaka
-              </p>
-              <p className="text-[var(--text-muted)]">
-                2018-2022
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications Section */}
-      <section id="certifications" className="section bg-[var(--bg-secondary)]/50 relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="section-title animate-fade-in-up">
-              Certifications
-            </h2>
-
-            <div className="space-y-4">
-              {[
-                { name: "Project Management", issuer: "Coursera", year: "2024" },
-                { name: "Generative AI for Project Management", issuer: "PMI", year: "2024" },
-                { name: "Web Development Course", issuer: "SoftTech IT", year: "2020" }
-              ].map((cert, index) => (
-                <div key={index} className="modern-card glow-gradient animate-fade-in flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Award className="w-6 h-6 text-[var(--accent-blue)]" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[var(--text-primary)]">{cert.name}</h3>
-                    <p className="text-[var(--text-secondary)] text-sm">{cert.issuer} • {cert.year}</p>
+          <div className="grid gap-6 md:grid-cols-12">
+            <Reveal className="md:col-span-5">
+              <div
+                className="relative h-full overflow-hidden rounded-3xl border border-white/[0.12] p-8"
+                style={{
+                  background: 'linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)',
+                }}
+              >
+                <div className="aurora left-[-15%] top-[-25%] h-56 w-56 bg-purple" />
+                <div className="relative">
+                  <GraduationCap className="h-8 w-8 text-lilac" />
+                  <h3 className="mt-6 font-display text-2xl font-semibold leading-snug text-white">
+                    {education.degree}
+                  </h3>
+                  <p className="mt-4 text-sm text-white-200">{education.school}</p>
+                  <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-5 font-mono text-xs text-white-200/70">
+                    <span>{education.period}</span>
+                    <span>{education.location}</span>
                   </div>
                 </div>
+              </div>
+            </Reveal>
+
+            <div className="grid gap-3 md:col-span-7">
+              {certifications.map((c, i) => (
+                <Reveal key={c.name} delay={i * 0.04}>
+                  <div className="glass-panel flex items-center gap-4 p-5 transition-colors duration-300 hover:border-purple/35">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-purple/30 bg-purple/10">
+                      <Award className="h-4 w-4 text-lilac" />
+                    </span>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium leading-snug text-white">{c.name}</p>
+                      <p className="mt-0.5 text-xs text-white-200/75">{c.issuer}</p>
+                    </div>
+                    <span className="font-mono text-xs text-lilac">{c.year}</span>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="section bg-[var(--bg-secondary)]/50 relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-6xl mx-auto flex flex-col gap-8">
-            <h2 className="section-title animate-fade-in-up">
-              Get In Touch
+      {/* ========================================================= CONTACT */}
+      <section id="contact" className="relative overflow-hidden py-20 md:py-28">
+        <div className="grid-bg absolute inset-0 opacity-70" />
+        <div className="aurora left-1/2 top-0 h-96 w-96 -translate-x-1/2 bg-purple" />
+
+        <div className="relative mx-auto max-w-[1400px] px-[var(--gutter)]">
+          <Reveal className="mx-auto mb-16 max-w-3xl text-center">
+            <p className="eyebrow mb-5">08 · Contact</p>
+            <h2 className="display-section">
+              Ready to find the problem <span className="text-lilac">behind your request?</span>
             </h2>
+            <p className="mx-auto mt-6 max-w-xl text-sm text-white-200 md:text-base">
+              Bring the problem, not the feature list. The first call maps the business model, the
+              users, and the workflow and usually changes what gets built.
+            </p>
+            <div className="mt-9 flex justify-center">
+              <MagicButton
+                title="Book the first call"
+                icon={<ArrowRight className="h-4 w-4" />}
+                handleClick={() => goTo('booking')}
+              />
+            </div>
+          </Reveal>
 
-            {/* Calendly Widget */}
-            <CalendlyWidget
-              calendlyUrl={CALENDLY_CONFIG.CALENDLY_URL}
-              className="w-full"
-            />
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Contact Info */}
-              <div className="animate-slide-in">
-                <h3 className="text-2xl font-semibold mb-6 gradient-text">Let's Work Together</h3>
-                <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
-                  I'm always interested in discussing new opportunities in AI data annotation,
-                  MLOps, and quality assurance. Let's connect and explore how we can collaborate.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <Mail className="w-5 h-5 text-[var(--accent-blue)]" />
+          <div className="grid gap-8 md:grid-cols-12">
+            <Reveal className="md:col-span-5">
+              <div className="glass-panel top-hairline relative h-full p-7">
+                <h3 className="font-display text-lg font-semibold text-white">Direct lines</h3>
+                <dl className="mt-6 space-y-4">
+                  {[
+                    {
+                      k: 'Email',
+                      v: profile.email,
+                      href: `mailto:${profile.email}`,
+                      icon: <Mail className="h-4 w-4" />,
+                    },
+                    {
+                      k: 'Phone',
+                      v: profile.phone,
+                      href: `tel:${profile.phone.replace(/\s/g, '')}`,
+                      icon: <Phone className="h-4 w-4" />,
+                    },
+                    {
+                      k: 'LinkedIn',
+                      v: '/in/improtik',
+                      href: profile.linkedin,
+                      icon: <Linkedin className="h-4 w-4" />,
+                    },
+                    {
+                      k: 'GitHub',
+                      v: '/asif-ikbal-protik',
+                      href: profile.github,
+                      icon: <Github className="h-4 w-4" />,
+                    },
+                    {
+                      k: 'Location',
+                      v: profile.location,
+                      href: '',
+                      icon: <MapPin className="h-4 w-4" />,
+                    },
+                  ].map((row) => (
+                    <div key={row.k} className="flex items-center gap-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-lilac">
+                        {row.icon}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-white-200/60">
+                          {row.k}
+                        </dt>
+                        <dd className="truncate text-sm text-white-200">
+                          {row.href ? (
+                            <a
+                              href={row.href}
+                              target={row.href.startsWith('http') ? '_blank' : undefined}
+                              rel="noopener noreferrer"
+                              className="transition-colors hover:text-lilac"
+                            >
+                              {row.v}
+                            </a>
+                          ) : (
+                            row.v
+                          )}
+                        </dd>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Email</p>
-                      <p className="text-[var(--text-secondary)]">asifikbalprotik@gmail.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Phone</p>
-                      <p className="text-[var(--text-secondary)]">+8801878044854</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-[var(--accent-blue)]" />
-                    </div>
-                    <div>
-                      <p className="text-[var(--text-primary)] font-medium">Location</p>
-                      <p className="text-[var(--text-secondary)]">Dhaka, Bangladesh</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex space-x-6 mt-8">
-                  <a
-                    href="https://www.linkedin.com/in/improtik/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://github.com/asif-ikbal-protik"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link w-12 h-12 bg-[var(--accent-blue)]/20 rounded-full flex items-center justify-center hover:bg-[var(--accent-blue)] hover:text-white transition-all duration-300"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
-                </div>
+                  ))}
+                </dl>
               </div>
+            </Reveal>
 
-              {/* Contact Form */}
-              <div className="contact-form animate-fade-in">
-                <form onSubmit={handleContactSubmit} className="space-y-6">
+            <Reveal delay={0.1} className="md:col-span-7">
+              <form
+                onSubmit={handleContactSubmit}
+                className="glass-panel top-hairline relative space-y-5 p-7"
+              >
+                <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="name" className="text-[var(--text-primary)] font-medium">Name</Label>
-                    <Input
+                    <label htmlFor="name" className="eyebrow mb-2 block">
+                      Name
+                    </label>
+                    <input
                       id="name"
                       type="text"
-                      className="form-input mt-2"
+                      required
+                      placeholder="Your name"
+                      className="field-input"
                       value={contactForm.name}
                       onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
-                      required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email" className="text-[var(--text-primary)] font-medium">Email</Label>
-                    <Input
+                    <label htmlFor="email" className="eyebrow mb-2 block">
+                      Email
+                    </label>
+                    <input
                       id="email"
                       type="email"
-                      className="form-input mt-2"
+                      required
+                      placeholder="you@company.com"
+                      className="field-input"
                       value={contactForm.email}
                       onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                      required
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="subject" className="text-[var(--text-primary)] font-medium">Subject</Label>
-                    <Input
-                      id="subject"
-                      type="text"
-                      className="form-input mt-2"
-                      value={contactForm.subject}
-                      onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="message" className="text-[var(--text-primary)] font-medium">Message</Label>
-                    <Textarea
-                      id="message"
-                      rows={4}
-                      className="form-input mt-2"
-                      value={contactForm.message}
-                      onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    disabled={contactMutation.isPending}
-                    className="modern-button w-full py-3 font-semibold text-lg flex items-center justify-center gap-2"
-                  >
-                    {contactMutation.isPending ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        Send Message
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
-            </div>
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="eyebrow mb-2 block">
+                    Subject
+                  </label>
+                  <input
+                    id="subject"
+                    type="text"
+                    required
+                    placeholder="What is this about?"
+                    className="field-input"
+                    value={contactForm.subject}
+                    onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="eyebrow mb-2 block">
+                    What are you trying to solve?
+                  </label>
+                  <textarea
+                    id="message"
+                    rows={5}
+                    required
+                    placeholder="The problem, who it affects, and what you have tried so far."
+                    className="field-input"
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                  />
+                </div>
+
+                <MagicButton
+                  type="submit"
+                  disabled={contactMutation.isPending}
+                  title={contactMutation.isPending ? 'Sending…' : 'Send message'}
+                  icon={<Send className="h-4 w-4" />}
+                />
+              </form>
+            </Reveal>
           </div>
+
+          {/* Calendly */}
+          <Reveal delay={0.1}>
+            <div id="booking" className="mt-16 scroll-mt-28">
+              <CalendlyWidget calendlyUrl={CALENDLY_CONFIG.CALENDLY_URL} />
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[var(--bg-primary)] border-t border-[var(--border-color)] py-8 relative z-10">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-[var(--text-secondary)]">
-            © 2025 Asif Ikbal. All rights reserved.
+      {/* ========================================================== FOOTER */}
+      <footer className="relative border-t border-white/[0.08] py-10">
+        <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-6 px-[var(--gutter)] md:flex-row md:justify-between">
+          <p className="text-xs text-white-200/70">
+            © {new Date().getFullYear()} {profile.name} · {profile.role}, {profile.discipline}
           </p>
+
+          <div className="flex items-center gap-3">
+            {[
+              { href: profile.linkedin, icon: <Linkedin className="h-4 w-4" />, label: 'LinkedIn' },
+              { href: profile.github, icon: <Github className="h-4 w-4" />, label: 'GitHub' },
+              {
+                href: `mailto:${profile.email}`,
+                icon: <Mail className="h-4 w-4" />,
+                label: 'Email',
+              },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith('http') ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-white-200 backdrop-blur transition-colors hover:border-purple/50 hover:text-lilac"
+              >
+                {s.icon}
+              </a>
+            ))}
+          </div>
         </div>
       </footer>
-    </div>
+    </main>
+    </MotionConfig>
   );
 };
 
